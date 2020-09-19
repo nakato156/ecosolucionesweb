@@ -1,0 +1,438 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@600&display=swap');
+[alt='www.000webhost.com']{
+	display:none;
+}
+body{
+	/*background:#78edc3;*/
+	margin: 0;
+	padding: 0;
+}
+*{
+	font-family: arial;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box; 
+}
+header::before{
+	content: "";
+	display: block;
+	margin: 80px;
+}
+/*.cab{
+	width: 100%;
+	height: 80px;
+	background: #fff;
+	border-bottom: 1px solid transparent;
+	box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, .2);
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	transition: ease-in-out 0.5s;
+}*/
+.contenedor{
+	width: 90%;
+	max-width: 1000px;
+	margin: auto;
+	overflow: hidden;
+}
+.hamb{
+	width: 80px;
+	height: 80px;
+	display: none;
+	text-align: center;
+	text-align: center;
+	z-index: 100;
+	cursor: pointer;
+	transition: color 0.3s ease-in;
+}
+.hamb > i{
+	font-size: 25px;
+	line-height: 80px;
+}
+.N{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0;
+}
+.header h1{
+	background: #aee076;
+	color: #fff;
+	padding: 25px;
+	text-align: center;
+	font-size: 30px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+@keyframes animat{
+0%{
+	transform: scale(0);
+	}100%{
+		transform: scale(1);
+	}
+}
+	/*------------------------------------estilo del nombre del usuario------------------------------------*/
+.datos{
+	font-weight: 300;
+	transition: ease-in-out 0.5s;
+	color: #fff;
+	font-size: 12px;
+	text-decoration: none;
+}
+.nombre{
+	color: #fff;
+}
+.datos a:hover{
+	color: #fff;
+	text-decoration: none;
+}
+.menu{
+	transition: ease-in-out 0.5s;
+	padding: 10px;
+	background: #fff;
+	text-decoration: none;
+}
+.user{
+	float: right;
+	font-size: 15px;
+	color: #fff;
+}
+/*------------------aqui termina lo de arriba------------------*/
+.carrito{
+	float: right;
+}
+.menu a{
+	text-decoration: none;
+	padding: 5px 10px;
+	transition: all 500ms ease;
+	color: #000;
+	background: #fff;
+	padding: 0 7px 3px 7px ;
+}
+.menu a:hover{
+	color: #000000;
+	/*background: #ffcb70;*/
+	background-color: rgba(255, 203, 112, 0.8);
+	text-decoration: none;
+}
+.cuerpo{
+	height: 100%;
+	background: #eaeaea;
+	padding: 30px;
+	/*min-height: 383px;*/
+}
+.footer{
+	color: #fff;
+	background: #504c44;
+	text-align: center;
+	font-size: 11px;
+	padding: 40px;
+}
+/*--------------------------------Login admin-----------------------------------*/
+.centrarLogin{
+	width: 40%;
+	text-align: center;
+	padding-top: 100px;
+}
+/*------------------------------estilos de las imagenes de lso productos------------------------------*/
+#carrito{
+	float: right;
+}
+.producto{
+	display: inline-block;
+	width: 220px;
+	padding: 10px;
+	background: rgb(0,0,0,0.05);
+	color: #333;
+	margin: 3px;
+}
+.img_producto{
+	text-align: center;
+	width: 200px;
+	height: 180px;
+}
+.name_producto{
+	padding: 10px;
+	color: #fff;
+	background: #aee056;
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+}
+.btn_agregar{
+	float: right;
+}
+.precio{
+	color:green;
+}
+/*------------------------imagen de producto del carro------------------------*/
+.imagen_carro{
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+.textG{
+	color: #0a0;
+}
+/*----------------------------------------pagina principal----------------------------------------*/
+.fondoh{
+	background: #aee076;
+	width: 210px;
+	height: 210px;
+	border-radius: 50%;
+}
+.imgoh{
+	width: 200px;
+	height: 200px;
+	transform: translateY(5px);
+}
+.inicio{
+	width: 100px;
+	font-size: 28px;
+	text-align: center;
+	font-family: 'Comic Neue', cursive;
+}
+.abajo{
+	color: #6d9fe9;
+}
+.icon-blog{
+	font-size: 40px;
+	color: #504c44;
+	cursor: pointer;
+}
+.myv{
+	height: 200px;
+	width: 100%;
+	justify-content: space-around;
+	display: inline-flex;
+	flex-wrap: wrap;
+	text-transform: uppercase;
+	margin: auto;
+}
+.mv{
+	color: #fff;
+	text-align: center;
+	margin: 0;
+}
+.mision{
+	padding: 8px;
+	color: #f2f2f2;
+	font-size: 15px;
+	text-align: justify;
+	height: 150px;
+	width: 40%;
+	background: #aee076;
+	box-shadow: 0 4px 10px rgba(17, 29, 48, .26);
+	margin: auto;
+}
+.vision{
+	padding: 8px;
+	color: #f2f2f2;
+	font-size: 15px;
+	text-align: justify;
+	height: 150px;
+	width: 40%;
+	background: #aee076;
+	box-shadow: 0 4px 10px rgba(17, 29, 48, .26);
+	margin: auto;
+}
+	/*-------------------------------------------------estilos responsive-------------------------------------------------*/
+@media(min-width:1024px){
+		form {
+			padding: 0 0 0 0;
+		}
+		.is{
+			font-size: 45px;
+		}
+		.form{
+			padding: 0 0 0;
+		}
+		form .ingres{
+			font-size: 20px;
+			width: 510px;
+			height: 40px;
+		}
+		form .btn{ 
+			font-size: 22px;
+			width: 80px;
+			height: 40px;
+		}
+		.reg{
+			font-size: 20px;
+		}
+		.datos{
+			color: #fff;
+			font-size: 15px;
+			text-decoration: none;
+		}
+		.user{	
+			font-size: 19px;
+		}
+/*		.hamb{
+			width: 80px;
+			height: 80px;
+			display: none;
+			text-align: center;
+			text-align: center;
+			z-index: 100;
+			cursor: pointer;
+			transition: color 0.3s ease-in;
+		}
+		.N{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0;
+		}*/
+		.menu a{
+			font-size: 17px;
+		}
+		.cuerpo{
+			height: 100%;
+		}
+		.producto{
+			display: inline-block;
+			width: 220px;
+			margin: 10px 5px;
+		}
+		.footer{
+			font-size: 16px;
+			padding: 40px 0;
+		}
+		.centrarLogin{
+			width: 400px;
+			padding-top: 100px;
+		}
+		.img_producto{
+			text-align: center;
+			width: 200px;
+			height: 180px;
+		}
+		.name_producto{
+			padding: 5px;
+			font-size: 13px;
+			font-weight: bold;
+		}
+		.myv{
+			padding: 0px;
+			height: 300px;
+			width: 100%;
+		}
+		.vision{
+			height: 243px;
+			width: 40%;
+		}
+		.mision{
+			font-size: 17.5px;
+			height: 243px;
+			width: 40%;
+		}
+}
+@media(max-width:1000px){
+/*	nav {
+	width: 100%;
+	height: 50px;
+	background: #fff;
+	border-bottom: 1px solid transparent;
+	top: 0;
+	z-index: 100;
+	transition: ease-in-out 0.5s;
+	}*/
+	form {
+		padding: 300px 0 0 0;
+	}
+	.hamb{
+		display: block;
+	}
+	.N{
+		padding: 0 10px;
+	}
+	.is{
+		font-size: 70px;
+	}
+	.form{
+		align-items: center;
+		padding: 0 0 10px;
+	}
+	form .ingres{
+		font-size: 30px;
+		width: 600px;
+		height: 50px;
+	}
+	form .btn{
+		font-size: 35px;
+		width: 150px;
+		height: 80px;
+	}
+	.reg{
+		font-size: 35px;
+	}
+	.menu {
+		position: fixed;
+		background: #36D1DC;  /* fallback for old browsers */
+		background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);  /* Chrome 10-25, Safari 5.1-6 */
+		background: linear-gradient(to right, #5B86E5, #36D1DC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+		top: 0;
+		right: 0;
+		width: 100%;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		justify-content: space-evenly;
+		clip-path: circle(0% at 0 0);
+		padding: 10px;
+	}
+	.N .menudos{
+		-webkit-clip-path: circle(141.4% at 100% 0);
+		clip-path: circle(141.4% at 100% 0);
+	}	
+	.enlacesh{
+		position: fixed;
+		background: #000;
+	}
+	.menu a{ 
+		font-size: 25px;
+	}
+	.cuerpo{
+		height: 98vh;
+	}
+	.footer{
+		font-size: 13px;
+		padding: 40px;
+	}
+	.centrarLogin{
+		width: 500px;
+	}
+	.producto{
+		display: inline-block;
+		width: 300px;
+		margin: 10px 5px;
+	}
+	.img_producto{
+		width: 280px;
+		height: 190px;
+	}
+	.name_producto{
+		padding: 5px;
+		font-size: 16px;
+		font-weight: bold;
+	}
+	.myv{
+		padding: 60px 0;
+		height: 200px;
+		width: 100%;
+	}
+	.vision{
+		height: 300px;
+		width: 40%;
+		font-size: 18px;
+	}
+	.mision{
+		background: #fba919;
+		height: 300px;
+		width: 40%;
+		font-size: 18px;
+	}
+}
