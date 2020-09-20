@@ -90,11 +90,16 @@ if(!isset($_REQUEST['buscar'])){
 				<img name="slider" id = "slider" src="" style="" alt="">
 			</section>
 			<?php
-				if(file_exists("routes/".$p.".php")) {
-					include "routes/".$p.".php";
+				if(isset($_REQUEST['p'])){
+					include "routes/productos.php";	
 				}else{
-					echo "<i>No se ha encontrado el modulo <b>".$p."</b> <a href='./'>Regresar</a></i>";
+					include "routes/principal.php";
 				}
+				// if(file_exists("routes/".$p.".php")) {
+				// 	include "routes/".$p.".php";
+				// }else{
+				// 	echo "<i>No se ha encontrado el modulo <b>".$p."</b> <a href='./'>Regresar</a></i>";
+				// }
 			?>
 		</section>
 	</section>

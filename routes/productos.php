@@ -1,13 +1,21 @@
 <section class="catalogo">
     <?php 
+    $_REQUEST['p'];
+
     if(isset($buscar)){
         $busqueda = strtolower($_REQUEST['buscar']);
         $query = mysqli_query($mysqli,"SELECT * FROM productos WHERE nombre LIKE '%".$busqueda."%'");
     }
     else{
-        $cat = mysqli_query($mysqli,"SELECT productos.id_categoria, categorias.categoria FROM productos INNER JOIN categorias ON productos.id_categoria = categorias.id WHERE categorias.categoria= '$p'");
-
-        $query = mysqli_query($mysqli,"SELECT productos.nombre, productos.precio, productos.oferta, productos.imagen, productos.id_categoria, categorias.categoria FROM productos INNER JOIN categorias ON productos.id_categoria = categorias.id WHERE categorias.categoria= '$p'");
+        if(isset($p)){
+            if ($_REQUEST['p'] == "principal") {
+                $query = mysqli_query($mysqli,"SELECT * FROM productos");
+            }else{                
+                $query = mysqli_query($mysqli,"SELECT productos.nombre, productos.precio, productos.oferta, productos.imagen, productos.id_categoria, categorias.categoria FROM productos INNER JOIN categorias ON productos.id_categoria = categorias.id WHERE categorias.categoria= '$p'");
+            }
+        }else{
+            $query = mysqli_query($mysqli,"SELECT * FROM productos");
+        }
     }
     while($res=mysqli_fetch_array($query)){
         $name = $res['nombre'];
