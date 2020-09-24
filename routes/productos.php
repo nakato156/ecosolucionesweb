@@ -1,9 +1,3 @@
-<?php
-if(!isset($_SESSION['user'])){
-    redir("routes/registro.php");
-    echo "inicia sesion";
-}
-?>
 <section class="catalogo">
     <?php 
     $_REQUEST['p'];

@@ -32,7 +32,7 @@
 include "../configs/config.php";
 include "../configs/funciones.php";
 
-if (isset($_SESSION['carrito']) && isset($_SESSION['user']) ) {
+if (isset($_SESSION['carrito'])) {
     if (isset($_REQUEST['id']) && isset($_REQUEST['cant'])) {
         $productos_carro = $_SESSION['carrito'];
         $match = false;
