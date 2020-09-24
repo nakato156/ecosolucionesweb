@@ -41,15 +41,46 @@ window.addEventListener("scroll", function(a){
     };
 });
 
+carrito.addEventListener("click", ()=>{
+    location.href ="shoping-car/carrito.php";
+})
+
 var search = document.getElementById("buscar");
 let sliders = document.getElementById("sliders");
+var carrito = document.getElementById("carrito");
 if (search.value !="") {
     sliders.style.display="none";
 }
 
+// seccion de categorias lateral
 $(".icon-down").click(function(){
     $(".submenu").children("ul").slideToggle();
 })
 $("ul").click(function(p){
     p.stopPropagation();
 })
+
+//funciones del boton para agregar al carrito
+document.getElementById("btn_Agregar");
+function agregar_carro(idp) {
+    $("form").submit(function(e){
+        e.preventDefault();
+
+    var data = $(this).serializeArray();
+    data = idp;
+    $.ajax({
+        url: 'shoping-car/carrito.php?id='+idp+'&cant=1',
+        type: 'post',
+        dataType: 'html',
+        data: data,
+    })
+    .done(function(){
+        alert("añadido al carrito"+idp);
+        console.log("Producto agregado al carro !siiiiiiii......");
+    })
+    .fail(function(){
+        alert("ha ocurrido un error al añadir el producto al carrito");
+    })
+})
+}
+

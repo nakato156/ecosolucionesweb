@@ -18,6 +18,13 @@ function redir($var){
 	<?php
 	die();
 }
+function check_user($url){
+	if (!isset($_SESSION['id_cliente'])) {
+		redir("?p=login&return=$url"."s");
+	}else{
+		
+	}
+}
 function alert($var){
 	?>
 	<script type="text/javascript">

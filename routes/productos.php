@@ -1,3 +1,9 @@
+<?php
+if(!isset($_SESSION['user'])){
+    redir("routes/registro.php");
+    echo "inicia sesion";
+}
+?>
 <section class="catalogo">
     <?php 
     $_REQUEST['p'];
@@ -11,13 +17,14 @@
             if ($_REQUEST['p'] == "principal") {
                 $query = mysqli_query($mysqli,"SELECT * FROM productos");
             }else{                
-                $query = mysqli_query($mysqli,"SELECT productos.nombre, productos.precio, productos.oferta, productos.imagen, productos.id_categoria, categorias.categoria FROM productos INNER JOIN categorias ON productos.id_categoria = categorias.id WHERE categorias.categoria= '$p'");
+                $query = mysqli_query($mysqli,"SELECT productos.id, productos.nombre, productos.precio, productos.oferta, productos.imagen, productos.id_categoria, categorias.categoria FROM productos INNER JOIN categorias ON productos.id_categoria = categorias.id WHERE categorias.categoria= '$p'");
             }
         }else{
             $query = mysqli_query($mysqli,"SELECT * FROM productos");
         }
     }
     while($res=mysqli_fetch_array($query)){
+        $id = $res["id"];
         $name = $res['nombre'];
         $precio = $res['precio'];
         $oferta = $res['oferta'];
@@ -30,13 +37,15 @@
             $preciofinal = '<span class="precio">'.$precio.$divisa.'</span>';
         }
     ?>
+    <form style="display:inline-flex;">
     <div class="producto">
-        <div class="name_producto"><b><?=$name;?></b></div>
-        <div><img src="img-products/<?=$img?>" class="img_producto" alt=""></div>
-        <?=$preciofinal?>
-        <button class="btn btn-warning" id="carrito"><div class="icon-carrito"></div>
+        <div class="name_producto" id="nombre"><b><?=$name;?></b></div>
+        <div><img src="img-products/<?=$img?>" id="img" class="img_producto" alt=""></div>
+        <div class ="precio" id="precio"><?=$preciofinal?></div>
+        <button type="submit" class="btn" id="btn_Agregar" onclick="agregar_carro('<?=$id;?>');"><div class="icon-carrito"></div><div class="añd" >Añadir al carrito</div>
         </button>
     </div>
+    </form>
     <?php
     }
     ?>

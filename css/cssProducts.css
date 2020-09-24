@@ -7,6 +7,7 @@
 }
 body{
 	font-family: 'Roboto', sans-serif;
+	/* background: #fba919; */
 }
 h1, h2, h3, h4, h5, h6{
 	color: #1d273b;
@@ -65,7 +66,7 @@ form >div >input{
 	outline-color: #cecece;
 }
 
-/* -----------------all menu----------------- */
+/* --------------------------------all menu-------------------------------- */
 .default {
 	display: none;
 }
@@ -99,17 +100,82 @@ nav{
 	z-index: 10;
 	right: 30px;
 }
+/* -----------------tabla del carrito de compras----------------- */
+.header{
+	font-size: 35px;
+	text-align: center;
+	width: 100%;
+	height: 120px;
+	background: #cecece;
+}
+.header >.shopcar {
+	padding-top: 10px;
+	width: 120px;
+	height: 100px;
 
+}
+.cuerpocar {
+	display: inline-flex;
+	justify-content: space-between;
+}
+.tablaCarrito{
+	margin-top: 20px;
+	/* margin-left: 30px; */
+	border-collapse: collapse;
+}
+.tablaCarrito tr:nth-child(even) {
+    background-color: #eee;
+}
+.tablaCarrito tr:nth-child(2) {
+	background-color: #eee;
+}
+.tablaCarrito tr:nth-child(odd) {
+    background-color: #fff;
+}
+.trH>td {
+	text-align: center;
+	background-color: #222022;
+	color: #f2f2f2;
+}
+.trs{
+	text-align: center;
+	background: #adb6c7;
+}
+.trs>td{
+	width: 150px;
+	color: #4c4947;
+}
+.trs>td>img{
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+/* ----------------metodos de pago---------------- */
+.pagar{
+	margin-top: 20px;
+	margin-right: 0;
+	height: 350px;
+	width: 400px;
+	right: 10px;
+	border: 1px solid #fba919;
+}
+.pagar >div >h3 {
+	width: 100%;
+	text-align: center;
+}
+.pagar >.btnPagar {
+	display: block;
+}
+
+/* menu */
 .Menu {
 	top: 0;
 }
-
 .Menu .sub{
 	background: #000;
 	display: block;
 	display: none;
 }
-
 .Menu a{
 	text-align: center;
     display: flex;
@@ -117,7 +183,6 @@ nav{
     font-weight: 300;
     text-decoration: none;
 }
-
 .Menu li{
 	max-width: 200px;
 	top: 0;
@@ -125,18 +190,17 @@ nav{
 	padding: 20px 7px;
 	transition: ease-in-out 0.5s;
 }
-
 .Menu ul {
 	text-align: center;
 	padding: 0 15px;
     list-style: none;
     display: flex;
 }
-
 .Menu li:hover {
 	background: rgba(206,204,206, .2);
 }
-/* ----------------slider---------------- */
+
+/* ----------------------------------slider---------------------------------- */
 .sliders{
 	top: 0;
 	width: 100%;
@@ -267,9 +331,30 @@ nav{
 	width: 170px;
     font-size: 15px;
 }
+.precio{
+	display: inline-flex;
+}
+
+.btn{
+	display: inline-flex;
+	border: none;
+	width: auto;
+	height: auto;
+	background: #6fce20;
+	border-radius: 5px;
+}
+.btn >.icon-carrito {
+	font-size: 18px;
+	text-align: center;
+}
+.btn > .icon-carrito, .añd {
+	padding-top: 5px;
+	text-align: center;
+	margin-left: 7px;
+	margin-right: 3px;
+}
 
 /* -------------------------end-page-part------------------------- */
-
 /*Servicios*/
 .service{
 	display: flex;

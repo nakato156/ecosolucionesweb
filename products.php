@@ -1,7 +1,7 @@
 <?php
 include "configs/config.php";
 include "configs/funciones.php";
-
+// var_dump($_SESSION['carrito']);
 if(!isset($p)) {
 	$p = "principal";
 
