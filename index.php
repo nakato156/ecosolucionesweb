@@ -31,7 +31,7 @@ if(!isset($_REQUEST['buscar'])){
     <header>
 		<section class="contenedor">
 			<div class="logo">
-				<img src="img/lg_help_class.png" alt="">
+				<img src="img/logo.png" alt="ecosolwebtelLogo">
 			</div>
 			<div class="busqueda">
 				<form action="" method="post">
@@ -48,15 +48,14 @@ if(!isset($_REQUEST['buscar'])){
 						<li><a href="?p=importaciones">Importaciones</a></li>
 						<li><a href="?p=computo">Computo</a></li>
 						<li><a href="?p=electro">Celulares y tablets</a></li>
-						<li><a href="?p=calzado">Calzado</a></li>
-						<li><a href="?p=carteras">Carteras</a></li>
+						<!-- <li><a href="?p=calzado">Calzado</a></li> -->
+						<!-- <li><a href="?p=carteras">Carteras</a></li> -->
 						<li><a href="?p=ropa_bebe">Ropa para bebe</a></li>
-						<li><a href="?p=cosmeticos">Cosmeticos</a></li>
+						<!-- <li><a href="?p=cosmeticos">Cosmeticos</a></li> -->
 						<li><a href="?p=voz_ip">Voz/ip</a></li>		
 						<li><a href="?p=videovigilancia">Video Vigilancia</a></li>		
 						<li><a href="?p=cableado">Cableado estructurado</a></li>		
 						<li><a href="?p=electro_hogar">Electo hogar</a></li>		
-						<li><a href="?p=servicios">Servicios</a><li class="sub"><a href="">Desarrollo Web</a></li></li>		
 					</ul>
 				</div>
 				<div class="hamb">
@@ -69,16 +68,14 @@ if(!isset($_REQUEST['buscar'])){
 		<div class="categorias">
 			<section class="cat">
 				<ul>
-					<li><a href="?p=item0">item0</a></li>
-					<li class="submenu"><a href="#">computo</a><div class="icon-down flecha"></div>
+					<li class="submenu"><a href="#">Servicios</a><div class="icon-down flecha"></div>
 						<ul>
-							<li><a href="?p=productos">sub item1</a></li>
-							<li><a href="#">sub item3</a></li>
-							<li><a href="#">sub item2</a></li>
-							<li><a href="#">sub item4</a></li>
+							<li><a href="developer">Desarrollo web</a></li>
+							<li><a href="?p=prox">Cursos en Linea</a></li>
 						</ul>
 					</li>
-					<li><a href="?p=item2">item2</a></li>
+					<li><a href="?p=cat">Cosmeticos</a></li>
+					<li><a href="?p=prox">Aula Virtual</a></li>
 				</ul>				
 			</section>
 		</div>
@@ -89,6 +86,8 @@ if(!isset($_REQUEST['buscar'])){
 			<section class="sliders" id = "sliders">
 				<img name="slider" id = "slider" src="" style="" alt="">
 			</section>
+			<div class="ventana" id="modal">
+			</div>
 			<?php
 				if(isset($_REQUEST['p'])){
 					include "routes/productos.php";	

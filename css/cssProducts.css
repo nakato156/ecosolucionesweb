@@ -24,15 +24,15 @@ header::before{
 /* ---------------Antes del menu--------------- */
 .contenedor {
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 }
 .logo{
 	padding: 0 10px;
-	width: 40%;
+	width: 50%;
 }
 .logo >img {
-	width: 100px;
-	height: 70px;
+	width: 200px;
+	height: 100px;
 }
 
 .busqueda{
@@ -85,18 +85,17 @@ nav{
 }
 
 .carrito {
-	visibility: hidden;
+	/* visibility: hidden; */
 	font-size: 26px;
 	text-align: center;
 	position: fixed;
 	width: 45px;
 	height: 45px;
-	top: 50px;
-	color: #222022;
 	border-radius: 50%;
+	color: #222022;
 	padding: 6px 4px 0 0;
 	transition: ease-in-out 0.7s;
-	background: chartreuse;
+	/* background: chartreuse; */
 	z-index: 10;
 	right: 30px;
 }
@@ -112,7 +111,7 @@ nav{
 	padding-top: 10px;
 	width: 120px;
 	height: 100px;
-
+	
 }
 .cuerpocar {
 	display: inline-flex;
@@ -124,13 +123,13 @@ nav{
 	border-collapse: collapse;
 }
 .tablaCarrito tr:nth-child(even) {
-    background-color: #eee;
+	background-color: #eee;
 }
 .tablaCarrito tr:nth-child(2) {
 	background-color: #eee;
 }
 .tablaCarrito tr:nth-child(odd) {
-    background-color: #fff;
+	background-color: #fff;
 }
 .trH>td {
 	text-align: center;
@@ -150,23 +149,109 @@ nav{
 	height: 50px;
 	border-radius: 50%;
 }
-/* ----------------metodos de pago---------------- */
-.pagar{
-	margin-top: 20px;
-	margin-right: 0;
-	height: 350px;
-	width: 400px;
-	right: 10px;
-	border: 1px solid #fba919;
-}
-.pagar >div >h3 {
+/* ------------Ventana Modal de carrito------------ */
+.ventana{
 	width: 100%;
+	display: none;
+}
+.ventanaCarro{
+	border-radius: 5px;
+	position: absolute;
+	width: 400px;
+	height: 200px;
+	background: #cfcfcf;
+	color: #4c4947;
 	text-align: center;
 }
-.pagar >.btnPagar {
-	display: block;
+.ventana h3 {
+	margin: auto;
+	font-size: 24px;
+	color: #6fce20;
 }
 
+/* ----------------metodos de pago---------------- */
+.pagar{
+	margin: auto;
+	height: 350px;
+	width: 400px;
+	/* right: 10px; */
+	text-align: center;
+	border: 1px solid #fba919;
+}
+form> label {
+	margin-left: 30px;
+	margin-top: 10px;
+	text-align: start;
+	width: 50%;
+	display: block;
+}
+form >input{
+	margin: 1px;
+	border: none;
+	width: 80%;
+	border-bottom: 1px solid #222022;
+	outline-color: transparent;
+}
+.pagar div h3 {
+	width: auto;	
+	color: #f2f2f2;
+	background: #4c4947;
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-right: 20px;
+	text-align: center;
+	border-radius: 10px;
+}
+.metodosPago {
+	margin-top: 10px;
+	display: inline-flex;
+}
+.MPagar {
+	width: auto;
+	padding: 10px;
+	/* background: chartreuse; */
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.pagar >.MPagar {
+	display: inline-flex;
+}
+.transfer {
+	padding: 3px;
+	display: inline-flex;
+	text-align: start;
+	width: 90px;
+	height: 30px;
+	background-color: #5B86E5;
+	border: none;
+	border-radius: 5px;
+}
+.transfer > i {
+	font-size: 25px;
+	margin-right: 2px;
+}
+.transfer >p {
+	text-decoration: none;	
+	font-size: 18px;
+}
+.izipay {
+	padding: 3px;
+	/* display: inline-flex; */
+	text-align: center;
+	width: 60px;
+	height: 30px;
+	background-color: #dd350e;
+	border: none;
+	border-radius: 5px;
+}
+.izipay > i {
+	font-size: 25px;
+	margin-right: 2px;
+}
+.izipay >p {
+	text-decoration: none;	
+	font-size: 18px;
+}
 /* menu */
 .Menu {
 	top: 0;
@@ -194,7 +279,9 @@ nav{
 	text-align: center;
 	padding: 0 15px;
     list-style: none;
-    display: flex;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
 }
 .Menu li:hover {
 	background: rgba(206,204,206, .2);
@@ -222,7 +309,7 @@ nav{
 }
 
 .fixed {
-    z-index: 1000;
+	z-index: 1000;
     position: fixed;
     top: 0;
 }
@@ -243,7 +330,10 @@ nav{
 }
 
 .catalogo{   
+	display: flex;
+	flex-wrap: wrap;
 	color: #000;
+	justify-content: space-evenly;
 }
 
 .cat ul{
@@ -432,11 +522,28 @@ footer{
 }
 
 @media(max-width:1000px){
+
+	.Menu{
+		position: absolute; 
+		background: #36D1DC;  
+		background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC); 
+		background: linear-gradient(to right, #5B86E5, #36D1DC);
+		right: 0;
+		width: 100vw;
+		height: auto;
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		justify-content: space-between;
+		clip-path: circle(0.0% at 0 26%);
+	}
 	h1{
 		font-size: 40px;
 	}
-	.contenidoH{
-		height: 650px;
+	.menudos{
+		position: absolute;
+		-webkit-clip-path: circle(140.9% at 0 0);
+		clip-path: circle(140.9% at 0 0);
 	}
 	.N{
 		padding: 0 10px;
@@ -444,65 +551,48 @@ footer{
 	.categorias {
 		display: none;
 	}
-	.contenidoH>img{
-		width: 200px;
-	}
-	.enlaces{
-		position: fixed;
-		background: #36D1DC;  /* fallback for old browsers */
-		background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);  /* Chrome 10-25, Safari 5.1-6 */
-		background: linear-gradient(to right, #5B86E5, #36D1DC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-		top: 0;
-		right: 0;
-		width: 100%;
-		height: 100vh;
-		display: flex;
-		align-items: center;
-		flex-direction: column;
+	.productos{
+		width: 100vw;
 		justify-content: space-evenly;
-		clip-path: circle(0% at 100% 0);
 	}
-	.N .menudos{
-		-webkit-clip-path: circle(141.4% at 100% 0);
-		clip-path: circle(141.4% at 100% 0);
-	}
+
 	.N .Menu a{
-		color: #fff;
+		color: #000;
+		text-align: center;
 	}
 	.hamb{
+		position: absolute;
 		width: 60px;
 		text-align: center;
 		display: flex;
 		justify-content: center;
 		justify-items: center;
 	}
-	.hamb >i {
-		width: 100%;
-	}
     
     .Menu {
-        position: absolute;
-        top: 50px;
+		text-align: center;
         left: 0;
-        width: 100%;
-        transform: translateX(-100%);
         transition: all 0.3s;
     }
-
-    .Menu ul{
+    .Menu>ul{
+		width: auto;
+		height: auto;
         display: block;
-        background: #555;
+	}
+	.Menu>ul>li{
+		height: auto;
+	}
+    .Menu ul li:hover {
+		background: chocolate;
+        /* display: none; */
     }
 
-    .Menu ul li:hover ul {
-        display: none;
-    }
-
-    /* .Menu a span {
-        position: absolute;
-        right: 5px; 
-    } */
-
+	.carrito{
+		bottom: 60px;
+		right: 20px;
+		background: chartreuse;
+		position: fixed;
+	}
 	/*service*/
 	.service>img{
 		width: 200px;
@@ -515,38 +605,25 @@ footer{
 	}
 }
 @media(max-width:590px){
-	.titulo{
-		font-size: 45px;
+	.logo {
+		width: 100%;
 	}
-	.contenidoH{
-		flex-direction: column;
-		justify-content: space-evenly;
-		height: 720px;
+	.busqueda{
+		display: none;
 	}
-	.contenidoH>img{
-		width: 400px;
+	.producto {
+		width: 300px;
+		text-align: center;
 	}
-	.textosH{
-		margin: 0;
-	}
-	/*About us*/
-	.articulo{
-		width: 45%;
-    }
-	/*servicios*/
-	.service{
-		flex-direction: column-reverse;
-		align-items: center;
-	}
-	.service>img{
-		width: 400px;
+	.name_producto {
+		width: auto;
 	}
 	/*Footer*/
 	footer{
 		justify-content: space-evenly;
 	}
 	.Pfooter{
-		width: 40%;
+		width: 100vw;
 		margin-bottom: 40px;
 		font-size: 25px;
 	}

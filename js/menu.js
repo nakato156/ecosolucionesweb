@@ -13,6 +13,8 @@ window.addEventListener('load', ()=>{
 
     function cambiarImg(){
         document.slider.src = imagenes[indiceImg];
+        var sl = document.querySelector("#slider");
+        sl.style.opacity="1";
         if(indiceImg < 6){
             indiceImg ++;
         }else{
@@ -25,19 +27,25 @@ window.addEventListener('load', ()=>{
 var menu = document.getElementById("menu");
 var carrito = document.getElementById("carrito");
 var altura = menu.offsetTop;
+var width = screen.width;
+if (width>1000){
+    carrito.style.top="30px";
+}
 
 window.addEventListener("scroll", function(a){
-    if (window.pageYOffset > altura)  {
-        menu.classList.add("fixed");
-        carrito.style.visibility="visible";
-        carrito.style.display="block";
-        carrito.style.top = "200px";
-        a.stopPropagation();
-
-    }else{
-        menu.classList.remove("fixed");
-        carrito.style.top="80px";
-        carrito.style.visibility="hidden";
+    if (width>1000){
+        if (window.pageYOffset > altura)  {
+            menu.classList.add("fixed");
+            carrito.style.background="chartreuse";
+            carrito.style.visibility="visible";
+            carrito.style.display="block";
+            carrito.style.top = "200px";
+            
+        }else{
+            carrito.style.background="transparent";
+            menu.classList.remove("fixed");
+            carrito.style.top="30px";
+        };
     };
 });
 
@@ -47,7 +55,7 @@ carrito.addEventListener("click", ()=>{
 
 var search = document.getElementById("buscar");
 let sliders = document.getElementById("sliders");
-var carrito = document.getElementById("carrito");
+
 if (search.value !="") {
     sliders.style.display="none";
 }
@@ -61,26 +69,62 @@ $("ul").click(function(p){
 })
 
 //funciones del boton para agregar al carrito
-document.getElementById("btn_Agregar");
+var btnAgg = document.getElementById("btn_Agregar");
 function agregar_carro(idp) {
     $("form").submit(function(e){
         e.preventDefault();
 
-    var data = $(this).serializeArray();
-    data = idp;
-    $.ajax({
-        url: 'shoping-car/carrito.php?id='+idp+'&cant=1',
-        type: 'post',
-        dataType: 'html',
-        data: data,
+        var data = $(this).serializeArray();
+        data = idp;
+        $.ajax({
+            url: 'shoping-car/carrito.php?id='+idp+'&cant=1',
+            type: 'post',
+            dataType: 'html',
+            data: data,
+        })
+        .done(function(){
+            alerta_carrito();
+            console.log("Producto agregado al carro !siiiiiiii......");
+        })
+        .fail(function(){
+            alert("ha ocurrido un error al añadir el producto al carrito");
+        })
     })
-    .done(function(){
-        alert("añadido al carrito"+idp);
-        console.log("Producto agregado al carro !siiiiiiii......");
-    })
-    .fail(function(){
-        alert("ha ocurrido un error al añadir el producto al carrito");
-    })
-})
 }
+//btnpay
+// var dats = document.getElementById("dataUser");
 
+//func ventana modal
+var conteiner = document.getElementById("modal");
+i=0;
+function alerta_carrito() {
+    if (i===0) {
+        var alerta_prod = document.createElement("div");
+        var h3 = document.createElement("h3");
+        var p = document.createElement("p");
+    
+        alerta_prod.setAttribute("class","ventanaCarro");
+        h3.setAttribute("class","aviso");
+        p.setAttribute("class","parrafo");
+    
+        conteiner.appendChild(alerta_prod);
+        alerta_prod.appendChild(h3);
+        alerta_prod.appendChild(p);
+
+        conteiner.style.display="block";
+        conteiner.style.top=window.pageYOffset+100+"px";
+        h3.innerHTML = "Exito";
+        p.innerHTML = "Producto agregado al carrito";
+        i=1;
+        setTimeout(ocultar, 2300);
+
+    }if(i===1){
+        conteiner.style.margin="200px";
+        conteiner.style.display="block";
+        conteiner.style.top=window.pageYOffset+100+"px";
+        setTimeout(ocultar, 2300);
+    }
+}
+function ocultar() {
+    conteiner.style.display="none";
+}

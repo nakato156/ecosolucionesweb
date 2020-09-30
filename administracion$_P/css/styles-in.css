@@ -1,0 +1,100 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #17a2b8;
+    height: 100vh;
+}
+#login .container #login-row #login-column #login-box {
+    margin-top: 120px;
+    max-width: 600px;
+    height: 320px;
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+}
+#login .container #login-row #login-column #login-box #login-form {
+    padding: 20px;
+}
+#login .container #login-row #login-column #login-box #login-form #register-link {
+    margin-top: -85px;
+}
+table.vmiddle>tbody>tr>td{
+    vertical-align:middle;    
+}
+  
+.barra {
+    color: #FFFFFF;
+    display: block;
+    font-weight: bold;/*http://bootsnipp.com/user/snippets/z79Nl#*/
+    margin-bottom: -1px;
+    height: 59px;
+    text-align: center;
+    font-size: 23px;
+    background-color: #0072b0;
+    line-height: 55px;
+    position: relative;
+}
+
+.highlight {
+    padding: 9px 14px;
+    margin-bottom: 14px;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
+}
+
+.archivo-ubicacion{
+    overflow:hidden;
+    height:35px;
+}
+.archivo-ubicacion div{
+    height:100%;
+    line-height:35px;
+}
+   
+.archivo-ubicacion-label{
+    font-weight:bold;
+    font-size:15px;
+}   
+.archivo-ubicacion-data{
+    border:1px solid #ddd;
+    border-left:0
+} 
+.subir-archivos{
+    background: #f8f8f8;
+    padding-top: 10px;
+    padding-bottom:10px;
+    border-radius: 5px;
+}   
+.carga-archivo-input {
+    position: relative;
+    overflow: hidden;
+    margin: 0px;    
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;    
+}
+.carga-archivo-input input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.carga-archivo-input-title {
+    margin-left:2px;
+}
+
+/* tabla para ver los productos */
+button{
+    border: none;
+    background: transparent;
+}
+.img_carro>img{
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+}

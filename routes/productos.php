@@ -10,6 +10,8 @@
         if(isset($p)){
             if ($_REQUEST['p'] == "principal") {
                 $query = mysqli_query($mysqli,"SELECT * FROM productos");
+            }elseif($_REQUEST['p'] == "cat"){
+                   header("location:catalogoPDF/catalogo-cosmeticos.pdf");
             }else{                
                 $query = mysqli_query($mysqli,"SELECT productos.id, productos.nombre, productos.precio, productos.oferta, productos.imagen, productos.id_categoria, categorias.categoria FROM productos INNER JOIN categorias ON productos.id_categoria = categorias.id WHERE categorias.categoria= '$p'");
             }
@@ -17,6 +19,10 @@
             $query = mysqli_query($mysqli,"SELECT * FROM productos");
         }
     }
+    // if(!isset($query)){
+    //     header("location")
+    //     die();
+    // }
     while($res=mysqli_fetch_array($query)){
         $id = $res["id"];
         $name = $res['nombre'];

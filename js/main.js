@@ -12,5 +12,6 @@ document.querySelectorAll(".hamb")[0].addEventListener("click", function(){
 		document.querySelectorAll(".hamb")[0].style.color ="#000"
 		menuI=true
 	}
+	enlaces.style.height=screen.height**2+"px";
 	enlaces.classList.toggle("menudos")
 })

@@ -9,7 +9,11 @@ function clear($var){
 	htmlspecialchars($var);
 	return $var;
 }
-
+function check_admin(){
+	if (!isset($_SESSION['chika'])) {
+		header("location:login.php");
+	}
+}
 function redir($var){
 	?>
 	<script>
