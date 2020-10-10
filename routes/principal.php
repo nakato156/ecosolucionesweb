@@ -26,7 +26,7 @@
         }
     ?>
     <form style="display:inline-flex;">
-    <div class="producto">
+    <div class="producto" onclick="info_producto(<?=$id?>)">
         <div class="name_producto" id="nombre"><b><?=$name;?></b></div>
         <div><img src="img-products/<?=$img?>" id="img" class="img_producto" alt=""></div>
         <div class ="precio" id="precio"><?=$preciofinal?></div>

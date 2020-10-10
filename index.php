@@ -55,6 +55,7 @@ if(!isset($_REQUEST['buscar'])){
 						<li><a href="?p=voz_ip">Voz/ip</a></li>		
 						<li><a href="?p=videovigilancia">Video Vigilancia</a></li>		
 						<li><a href="?p=cableado">Cableado estructurado</a></li>		
+						<li><a href="?p=cosmeticos">Cosmeticos</a></li>		
 						<li><a href="?p=electro_hogar">Electo hogar</a></li>		
 					</ul>
 				</div>
@@ -68,13 +69,16 @@ if(!isset($_REQUEST['buscar'])){
 		<div class="categorias">
 			<section class="cat">
 				<ul>
-					<li class="submenu"><a href="#">Servicios</a><div class="icon-down flecha"></div>
+					<li class="submenu"><a href="development">Servicios</a><div class="icon-down flecha"></div>
 						<ul>
-							<li><a href="developer">Desarrollo web</a></li>
+							<li><a href="development?p=developer">Desarrollo web</a></li>
+							<li><a href="development">Diseño web</a></li>
+							<li><a href="development">Programas a medida</a></li>
+							<li><a href="development">Elaboracion de tienda virtual</a></li>
+							<li><a href="development">Elaboracion de aula virtual</a></li>
 							<li><a href="?p=prox">Cursos en Linea</a></li>
 						</ul>
 					</li>
-					<li><a href="?p=cat">Cosmeticos</a></li>
 					<li><a href="?p=prox">Aula Virtual</a></li>
 				</ul>				
 			</section>
@@ -88,6 +92,7 @@ if(!isset($_REQUEST['buscar'])){
 			</section>
 			<div class="ventana" id="modal">
 			</div>
+			<div class="infoP" id="infoP"></div>
 			<?php
 				if(isset($_REQUEST['p'])){
 					include "routes/productos.php";	
@@ -118,11 +123,11 @@ if(!isset($_REQUEST['buscar'])){
 		<div class="Pfooter">
 			<h4>Redes sociales</h4>
 			<div class="redesS">
-				<i class="icon-fb"><a blank href="https://www.facebook.com/ecoaoluciones/" target="_blank"></a></i>
+				<i class="icon-fb"><a blank href="https://www.facebook.com/ecosolucionesweb/" target="_blank"></a></i>
 				<i class="icon-wp"><a blank href="https://wa.me/c/51902658722" target="_blank"></a></i>
 			</div>
 		</div>
-		<!-- <p>Todos los derechos reservados-Copyright &copy; <?=date("Y")?></p> -->
+		 <!--<p>Todos los derechos reservados-Copyright &copy; <?=date("Y")?></p> -->
 	</footer>
 	<!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> -->
 	<script src="js/main.js"></script>
