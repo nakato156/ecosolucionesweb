@@ -18,6 +18,7 @@ $(document).ready(function() {
 				if(url === "edit.php"){
 					alert(datos);
 					edit = false;
+					console.log(edit)
 				}
 			}
 		})
