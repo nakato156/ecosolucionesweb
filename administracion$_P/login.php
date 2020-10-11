@@ -1,5 +1,6 @@
 <?php
-    include "php/settings.php";
+include "../configs/config.php";
+include "../configs/funciones.php";
 
     if (isset($_POST['username']) && isset($_POST['password'])) {
         $username=$_POST['username'];

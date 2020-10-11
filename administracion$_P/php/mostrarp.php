@@ -1,8 +1,5 @@
 <?php 
-$host_mysql="localhost";
-$user_mysql="root";
-$pass_mysql="";
-$bd_mysql="ecosol";
+include "../../configs/config.php";
 //variable de la base de datos
 $mysqli = mysqli_connect($host_mysql, $user_mysql,$pass_mysql,$bd_mysql);
 mysqli_set_charset($mysqli, "utf8");
@@ -45,6 +42,7 @@ while ($rp=mysqli_fetch_array($prod)) {
 	$q = mysqli_query($mysqli,"SELECT * FROM categorias WHERE id = '$idc'");
 	while($r=mysqli_fetch_array($q)){
 		$json[] = array(
+			'id' => $rp['id'],
 			'imagen' => $rp['imagen'],
 			'name' => $rp['nombre'],
 			'categoria' => $r['categoria'],

@@ -1,8 +1,5 @@
 <?php 
-$host_mysql="localhost";
-$user_mysql="root";
-$pass_mysql="";
-$bd_mysql="ecosol";
+include "../../configs/config.php";
 //variable de la base de datos
 $mysqli = mysqli_connect($host_mysql, $user_mysql,$pass_mysql,$bd_mysql);
 mysqli_set_charset($mysqli, "utf8");

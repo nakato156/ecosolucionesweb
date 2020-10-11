@@ -9,10 +9,18 @@ $mysqli = mysqli_connect($host_mysql, $user_mysql,$pass_mysql,$bd_mysql);
 function delete($idp)
 {
     echo "Hola"+$idp;
-    // mysqli_query($mysqli,"DELETE FROM productos WHERE id ='$eliminar'");
 }
-if(isset($eliminar)) {
-    echo "holaaas";
+if(isset($_REQUEST['id'])){
+    $_REQUEST['id'] = $id;
+    echo "id: ".$id;
+    // var_dump($id);exit;
+    $q = mysqli_query($mysqli,"SELECT * FROM productos WHERE id = 1");
+    $rp = mysqli_fetch_array($q);
+    echo "prodcusto".$q['nombre'];
+}
+function eliminar_producto($id)
+{
+    mysqli_query($mysqli,"DELETE FROM productos WHERE id ='$id'");    
 }
 ?>
 <!DOCTYPE html>
@@ -41,14 +49,15 @@ if(isset($eliminar)) {
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Nombre del Producto</label>
+                                <input type="hidden" id="idn" name="id-p">
                                 <input type="text" id="nombre" name="nombre" class="form-control">
                                 <label>Precio del Producto</label>
-                                <input type="text" name="precio" class="form-control">
+                                <input type="text" id="precio" name="precio" class="form-control">
                             </div>
                             <div class="form-group">
                                 <div class="form-group">
                                     <label>Categoria</label>
-                                    <select class="form-control" id="" name="categoria">
+                                    <select class="form-control" id="categoria" name="categoria">
                                         <option value="">Seleccione una categoria</option>
                                     <?php
                                         $categorias=mysqli_query($mysqli,"SELECT * FROM categorias");
@@ -67,13 +76,13 @@ if(isset($eliminar)) {
                             <div class="form-group">
                                 <label>Subir Imagen del Producto</label>
                                 <div class="input-group">
-                                    <input placeholder="" type="text" class="form-control carga-archivo-filename" disabled="disabled">
+                                    <input placeholder="" name="txtImg" id="txt-img" type="text" class="form-control carga-archivo-filename" disabled="disabled">
                                     <span class="input-group-btn"> 
                                         <!-- image-preview-input -->
                                         <div class="btn btn-default carga-archivo-input"> 
                                             <span class="glyphicon glyphicon-folder-open"></span>
                                             <span class="carga-archivo-input-title">Seleccionar archivo</span>
-                                            <input type="file" name="imagen"/>
+                                            <input type="file" name="imagen" id="img"/>
                                         </div>
                                     </span>
                                 </div>
