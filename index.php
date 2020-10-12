@@ -92,7 +92,7 @@ if(!isset($_REQUEST['buscar'])){
 			</section>
 			<div class="ventana" id="modal">
 			</div>
-			<div class="infoP" id="infoP"></div>
+			<div class="infoP" id="infoP"></div></div>
 			<?php
 				if(isset($_REQUEST['p'])){
 					include "routes/productos.php";	
@@ -123,8 +123,8 @@ if(!isset($_REQUEST['buscar'])){
 		<div class="Pfooter">
 			<h4>Redes sociales</h4>
 			<div class="redesS">
-				<i class="icon-fb"><a blank href="https://www.facebook.com/ecosolucionesweb/" target="_blank"></a></i>
-				<i class="icon-wp"><a blank href="https://wa.me/c/51902658722" target="_blank"></a></i>
+				<a href="https://www.facebook.com/ecosolucionesweb/" target="_blank"><i class="icon-fb"></i></a>
+				<a href="https://wa.me/c/51902658722" target="_blank"><i class="icon-wp"></i></a>
 			</div>
 		</div>
 		 <!--<p>Todos los derechos reservados-Copyright &copy; <?=date("Y")?></p> -->

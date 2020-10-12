@@ -15,6 +15,7 @@ if (isset($_POST['id'])) {
     $cat = $categoria['categoria'];
 
     $info[] = array(
+        'img' => $res['imagen'],
         'nombre' => $res['nombre'],
         'precio' => $res['precio'],
         'categoria' => $cat

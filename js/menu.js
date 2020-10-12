@@ -95,6 +95,7 @@ function agregar_carro(idp) {
 
 //func ventana modal
 var conteiner = document.getElementById("modal");
+var info = document.getElementById("infoP");
 i = 0;
 function alerta_carrito() {
   if (i === 0) {
@@ -143,42 +144,69 @@ function info_producto(id) {
       }
     })
     .then(function (info_prod) {
+      var img = info_prod.img;
       var nombre = info_prod.nombre;
       var precio = info_prod.precio;
       var categoria = info_prod.categoria;
       console.log(info_prod);
-      infoProd(nombre,precio,categoria);
+      // inf=0
+      printInfoProd(nombre,precio,categoria,img);
     })
     .catch(function (err) {
       console.log(err);
     });
 }
-inf=0
-function infoProd(name,precio,cat) {
-    if(inf<1){
-        var infProd = document.createElement("div");
-        var h3 = document.createElement("h3");
-        var p = document.createElement("p");
+function printInfoProd(name,precio,cat,img) {
+  var infProd = document.createElement("div");
+  var cajaP = document.createElement("div");
+  var img_infoP = document.createElement("img");
+  var h3 = document.createElement("h3");
+  var p = document.createElement("p");
+  var x = document.createElement("i");
 
-        infProd.setAttribute("class", "ventanaCarro");
-        h3.setAttribute("class", "aviso");
-        p.setAttribute("class", "parrafo");
+  
+  infProd.setAttribute("class", "infoProd");
+  cajaP.setAttribute("class", "cajaP");
+  img_infoP.setAttribute("src", "img-products/"+img);
+  h3.setAttribute("class", "infP");
+  p.setAttribute("class", "parrafo");
+  x.setAttribute("class", "icon-plus cerrar");
+  
+  infoP.appendChild(infProd);
+  infProd.appendChild(h3);
+  infProd.appendChild(x);
+  infProd.appendChild(cajaP);
+  cajaP.appendChild(img_infoP);
+  cajaP.appendChild(p);
+  if(cat === "computo" ||  cat === "importaciones"){
+    var fichaTecnica = document.createElement("div");
+    var viewFT = document.createElement("button");
+    var textFT = document.createElement("p");
 
-        conteiner.appendChild(infProd);
-        infProd.appendChild(h3);
-        infProd.appendChild(p);
+    fichaTecnica.setAttribute("class","fichaTec");
+    viewFT.setAttribute("class","viewFT");
+    textFT.setAttribute("class","textFT");
     
-        conteiner.style.display = "block";
-        conteiner.style.position = "absolute";
-        conteiner.style.margin = "auto";
-        h3.style.color = "#000";
-        h3.style.padding = "20px";
-        h3.innerHTML = name;
-        p.innerHTML = "Precio: "+precio+"<br>"+"Categoria: "+cat;
+    cajaP.appendChild(fichaTecnica)
+    fichaTecnica.appendChild(textFT)
+    fichaTecnica.appendChild(viewFT)
+    
+    fichaTecnica.style.width="100%";
 
-        console.log(inf)
-        inf=1;
-    }else{
-        alert("mayor");
-    }    
+    textFT.innerHTML="Ficha tecnca : "
+    viewFT.innerHTML="Ver Ficha"
+  }
+
+  infoP.style.display = "block";
+  // infoP.style.position = "absolute";
+  infoP.style.margin = "auto";
+  h3.style.color = "#000";
+  h3.style.padding = "20px";
+  h3.innerHTML = name;
+  p.innerHTML = "Precio: "+"S/."+precio+"<br>"+"Categoria: "+cat;
+  x.addEventListener('click',()=>{
+    infProd.remove()
+    infoP.style.display="none";
+  })
+// console.log(inf)
 }

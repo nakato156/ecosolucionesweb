@@ -179,11 +179,66 @@ nav{
 	font-size: 24px;
 	color: #6fce20;
 }
-
+/* ----------------Modal Info Producto---------------- */
+.infoProd{
+	padding: 30px;
+	top: 130px;
+	position: fixed;
+	background: #fff;
+	border: 1px solid #cecece;
+	border-radius: 50px;
+	width: 800px;
+	height: 500px;
+}
+.infoProd>h3{
+	width: 95%;
+	display: inline-flex;
+	margin-bottom: 15px;
+	text-align: center;
+	font-size: 32px;
+}
+.infoProd>i{
+	width: 25px;
+	height: 25px;
+	/* text-align: center; */
+	padding: 4px;
+	cursor: pointer;
+	right: 0;
+	display: inline-flex;
+	background: red;
+	color: #fff;
+	border-radius: 50%;
+	transform: rotate(45deg);
+}
+.cajaP> img{
+	max-width: 250px;
+	max-height: 200px;
+}
+.cajaP{
+	padding: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+.fichaTec{
+	margin: 30px 10px;
+}
+.textFT{
+	display: inline-flex;
+}
+.viewFT{
+	border: none;
+	border-radius: 25px;
+	width: 100px;
+	height: 30px;
+	margin-left: 40px;
+	background: #6fce20;
+	color: #fff;
+}
 /* ----------------metodos de pago---------------- */
 .pagar{
 	margin: auto;
-	height: 350px;
+	height: auto;
 	width: 400px;
 	/* right: 10px; */
 	text-align: center;
@@ -202,6 +257,10 @@ form >input{
 	width: 80%;
 	border-bottom: 1px solid #222022;
 	outline-color: transparent;
+}
+.tyc{
+	width: 100%;
+	padding: 0 5px;
 }
 .pagar div h3 {
 	width: auto;	
@@ -448,7 +507,7 @@ form >input{
 	font-size: 18px;
 	text-align: center;
 }
-.btn > .icon-carrito, .a«Ðd {
+.btn > .icon-carrito, .aï¿½ï¿½ï¿½d {
 	padding-top: 5px;
 	text-align: center;
 	margin-left: 7px;
@@ -485,7 +544,7 @@ footer{
 	margin-bottom: 30px;
 }
 .Pfooter a{
-	display: block;
+	/* display: block; */
 	text-decoration: none;
 	color: #fba919;
 	font-weight: 300;
