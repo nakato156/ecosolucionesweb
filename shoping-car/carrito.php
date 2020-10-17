@@ -18,13 +18,14 @@ include "../configs/funciones.php";
     </tr>
 <?php
 // session_start();
-if(isset($_SESSION['cod'])){
-        $cod = $_SESSION['cod'];
-        echo "<p>Codigo de venta: $cod ---> </p><br><p>Asegures de guardarlo para cualquier reclamo</p>";
-        session_destroy();
-        session_start();
-}
 
+function borrar_carro($q)
+{
+    if ($q) {
+        unset($_SESSION['carrito']);
+        mostrar_cod();
+    }
+}
 if (isset($_SESSION['carrito']) && !isset($_SESSION['cod'])) {
     if (isset($_REQUEST['id']) && isset($_REQUEST['cant'])) {
         $productos_carro = $_SESSION['carrito'];
@@ -105,52 +106,64 @@ if (isset($_SESSION['carrito']) && !isset($_SESSION['cod'])) {
         );
         $_SESSION['carrito'] = $productos_carro;
     }else{
-        echo "<h1>Su carrito esta vacio :(</h1>";
-        die();
+        if (!isset($_SESSION['carrito']) || $_SESSION['carrito']==="") {
+            mostrar_cod();
+            echo "<h1>Su carrito esta vacio :(</h1><br>";
+            die();
+        }
     }
 }
-?> 
-<?php
+
 if (!isset($_SESSION['carrito'])) {
     // header("location:../");
     die("inicia sesio pndj");
 }
+    $carrito = $_SESSION['carrito'];
+    $total=0;
+    for ($pt=0; $pt <count($carrito); $pt++) {
+        $total+=$carrito[$pt]['precio']*$carrito[$pt]['cantidad'];
+
+    }
+    // var_dump($ptotal);exit;
     // Mercado Pago SDK
     require '../routes/vendor/autoload.php';
-
+    
     // Add Your credentials
     MercadoPago\SDK::setAccessToken('TEST-7193293061917941-092017-733ada8f0546bc4dc3347475b5bff79f-648764853');
-
+    
     // Create a preference object
     $preference = new MercadoPago\Preference();
+    //pre datos requeridos
+    $codMP = rand(10000,10000000);
 
     $preference->back_urls = array(
-        "success" => "https://localhost/routes/process.php",
-        "failure" => "http://localhost/routes/pago_error.php?error=failure",
-        "pending" => "http://localhost/routes/pago_pending.php?error=pendiente"
+        "success" => "http://localhost:8000/Page-ecosolwebtel/shoping-car/process.php?method=mercado_pago&cod=".$codMP,
+        "failure" => "http://localhost:8000/Page-ecosolwebtel/shoping-car/pago_error.php?error=failure",
+        "pending" => "http://localhost:8000/Page-ecosolwebtel/shoping-car/pago_pending.php?error=pendiente"
     );
     $preference->auto_return = "approved";
-
+    
     $carrito = $_SESSION['carrito'];
-
+    
     // Create a preference item
     $datosProductos=array();
     for ($i=0; $i <count($carrito); $i++){
         $item = new MercadoPago\Item();
         $item->title =  $carrito[$i]['nombre'];;
         $item ->quantity = $carrito[$i]['cantidad'];;
-        $item->unit_price = $carrito[$i]['precio']-(($carrito[$i]['precio']*4)/100);;
+        $item->unit_price = $carrito[$i]['precio']+(($carrito[$i]['precio']*4)/100);;
         $datosProductos[]=$item;
     }
             
     $preference->items = $datosProductos;
     $preference->save();
-if (isset($_SESSION['carrito'])) {
-    $carrito = $_SESSION['carrito'];
-
-    for ($i=0; $i <count($carrito); $i++) {  
-                     
-?>
+    if (isset($_SESSION['carrito'])) {
+        $carrito = $_SESSION['carrito'];
+        $get_id = mysqli_query($mysqli,"SELECT * FROM productos");
+        // var_dump($id);
+        for ($i=0; $i <count($carrito); $i++) {  
+            
+            ?>
     <tr class="trs">
         <td><img src="../img-products/<?php echo $carrito[$i]['img'];?>" alt=""></td>
         <td><?php echo $carrito[$i]['nombre'];?></td>
@@ -169,12 +182,13 @@ if (isset($iz)) {
         $direccion = mysqli_real_escape_string($mysqli,$direccion);
         $email = mysqli_real_escape_string($mysqli,$email);
         $codigo_venta = rand(10000,10000000);
-        
-        $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,cod) VALUES('$nombre', '$telf', '$direccion', '$email','$codigo_venta')");
-        var_dump($_SESSION['pago']);
+        $monto = $total+(($total*4)/100);
+
+        $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,monto,cod,metodo,estado) VALUES('$nombre', '$telf', '$direccion','$email','$monto','$codigo_venta','izipay','pendiente')");
         $_SESSION['pago']="iz";
         $_SESSION['cod']=$codigo_venta;
-        
+        borrar_carro($cliente);
+
         header("location:izipay.php");
     }else{
         ?>
@@ -188,10 +202,13 @@ if (isset($iz)) {
         $direccion = mysqli_real_escape_string($mysqli,$direccion);
         $email = mysqli_real_escape_string($mysqli,$email);
         $codigo_venta = rand(10000,10000000);
+        $monto = $total;
         
-        $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,cod) VALUES('$nombre', '$telf', '$direccion', '$email','$codigo_venta')");
+        $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,monto,cod,metodo,estado) VALUES('$nombre', '$telf', '$direccion', '$email','$monto','$codigo_venta','transferencia','pendiente')");
         $_SESSION['pago']="tf";
         $_SESSION['cod']=$codigo_venta;
+        borrar_carro($cliente);
+
         header("location:transfer.php");
     }else{
         ?>
@@ -201,10 +218,11 @@ if (isset($iz)) {
 }
 ?>
 <tr class="trs">
-    <td><h3>Total</h3></td>
-        <td>    
-        <td>nose</td>
-    
+    <td><h3><b>SubTotal<b></h3></td>
+        <td></td>    
+        <td></td>
+        <td></td>    
+        <td><h3><b><?=$total?><b><h3></td>    
 </tr>
     <?php
     ?>
@@ -236,35 +254,64 @@ if (isset($iz)) {
                     <p>Pago por Izipay</p><br>
                     <button id="izipay" name="iz" class="izipay"><p>izipay</p></button>
                 </div>
+                <div class="MPagar">
+                    <p>Pago por Yape</p><br>
+                    <button id="yape" name="yp" class="yape"><p>Yape</p></button>
+                </div>
             </div>
         </form>
         <div class="MPagar" >
             <p>Pago por Mercado pago</p><br>
-            <form action="process.php" method="POST" id="mp">
+            <form action="process.php?method=mercado_pago" method="POST" id="mp">
                 <script src="https://www.mercadopago.com.pe/integrations/v1/web-payment-checkout.js"
-                data-preference-id="<?php echo $preference->id; ?>">
+                data-preference-id="<?php echo $preference->id; #if($preference->id){add($preference->id);}?>">
                 </script>
             </form>
-        </div>
+        </div> 
     </section>
 </div>
 <?php
+function add($v)
+{
+    $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre) VALUES('$v')");
+}
 if(isset($_SESSION['cod']) && $_SESSION['cod']!=""){
+    mostrar_cod();
+}
+function mostrar_cod()
+{
     $cod = $_SESSION['cod'];
     echo "<p>Codigo de venta: $cod</p><br><p>Asegures de guardarlo para cualquier reclamo</p>";
 }
+if (isset($_REQUEST['nombre'])) {
+    $nombre = $_REQUEST['nombre'];
+    $mail = $_REQUEST['correo'];
+    $lugar = $_REQUEST['lugar'];
+    $telef = $_REQUEST['telf'];
+
+    $data [] = array(
+        'nombre' => $nombre,
+        'email' => $mail,
+        'lugar' => $lugar,
+        'telf' => $telef,
+        'monto' => $total
+    );
+    $_SESSION['mp_data']=$data;
+}
 ?>
 <script>
+var form_mp=document.getElementById('mp');
 var form = document.getElementById('dataUser');
 var nombre = form.nombre;
 var telf = form.telf;
 var direccion = form.direccion;
 var email = form.email;
-    
+    send_data();
+    var btn_mp = document.getElementById('mp');
     var checkbox = document.getElementById('btn-tyc');
     var btn_tf = document.getElementById('transfer');
     var btn_iz = document.getElementById('izipay');
-    var btn_mp = document.getElementById('mp');
+    var btn_yp = document.getElementById('yape');
     
     disabled();
     // checkbox.addEventListener('click', function() {
@@ -273,6 +320,7 @@ var email = form.email;
             if(this.checked) {
                 btn_tf.disabled = false;   
                 btn_iz.disabled = false;   
+                btn_yp.disabled = false;   
                 btn_mp.style.display = "block";  
             }else{
                 disabled();
@@ -284,9 +332,50 @@ var email = form.email;
         }
     })
 function disabled() {
+    btn_mp.style.display = "none"; 
     btn_tf.disabled = true;   
     btn_iz.disabled = true;   
-    btn_mp.style.display = "none"; 
+    btn_yp.disabled = true;   
+}
+
+function send_data(){
+form_mp.addEventListener('submit', function(){
+    var name = nombre.value;
+    var dir = direccion.value;
+    var mail = email.value;
+    var telf = document.getElementById('telf');
+    var number = telf.value;
+
+    const data = new FormData();
+    data.append("nombre", name);
+    data.append("lugar", dir);
+    data.append("correo", mail);
+    data.append("telf", number);
+
+    fetch("carrito.php", {
+        method: "POST",
+        body: data,
+    })
+    .then(function (res) {
+        if (res.ok) {
+            console.log("Datos enviados");
+        } else {
+            throw "Error weyyyyyy nooooooooooooooo";
+        }
+    })
+    // .then(function (info_prod) {
+    //     var img = info_prod.img;
+    //     var nombre = info_prod.nombre;
+    //     var precio = info_prod.precio;
+    //     var categoria = info_prod.categoria;
+    //     console.log(info_prod);
+    //     // inf=0
+    //     printInfoProd(nombre,precio,categoria,img);
+    // })
+    .catch(function (err) {
+        console.log(err);
+    });
+})
 }
 // });
 

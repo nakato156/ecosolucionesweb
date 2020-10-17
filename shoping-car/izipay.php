@@ -5,12 +5,8 @@
         die();
     }
 ?>
-<table>
-    <tr>
-        <td><p>Numero de cuenta</p></td>
-    </tr>
-</table>
 <div>
-    <h3>Su codigo de venta es:</h3><br>
+    <h2>Su codigo de venta es:</h2><br>
     <p><?=$_SESSION['cod']?></p>
+    <h3>Para confirmar su venta y poder ser prcesada debe de comunicarse al siguiente correo electronico de ventas: ventas@ecosolucionesweb.com</h3>
 </div>
