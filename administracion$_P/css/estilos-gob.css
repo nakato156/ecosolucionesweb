@@ -1,0 +1,49 @@
+table{
+    margin: auto;
+}
+.thead{
+    color: #000;
+    background: #cecece;
+}
+.thead > tr >th{
+    margin: 10px;
+    padding: 10px;
+}
+.dataCompras>td{
+    padding: 10px;
+    max-width: 200px;
+    height: auto;
+}
+.estado{
+    background-color: transparent;
+    outline-color: transparent;
+    padding: 10px;
+    max-width: 100px;
+    border: none;
+}
+.buscador{
+    float: right;
+    width: 50%;
+    padding: 5px;
+    height: auto;
+    justify-content: right;
+    margin: 10px 20px 5px 0px;
+    /* background: #000; */
+}
+.buscador> i{
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
+    color: #000;
+    /* background: #ccc; */
+    right: 0;
+}
+.buscar{
+    right: 0;
+    width: 450px;
+    height: 30px;
+    outline: none;
+    border: none;
+    border-style: none;
+    /* outline-color: transparent; */
+}

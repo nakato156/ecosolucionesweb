@@ -707,3 +707,23 @@ footer{
 	}
 
 }
+/* Ver tracking */
+.tablaTracking{
+	border-collapse: collapse;
+	border: #000;
+	color: #000;
+}
+.encabezadoTH>tr{
+	width: 100%;
+	background: #cecece;
+	height: 30px;
+}
+.encabezadoTH>tr>th{
+	padding: 7px;
+	width: 150px;
+}
+.cuerpoTk>tr>td{
+	text-align: center;
+	padding: 15px;
+	width: 100px;
+}

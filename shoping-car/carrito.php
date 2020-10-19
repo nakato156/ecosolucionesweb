@@ -184,7 +184,7 @@ if (isset($iz)) {
         $codigo_venta = rand(10000,10000000);
         $monto = $total+(($total*4)/100);
 
-        $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,monto,cod,metodo,estado) VALUES('$nombre', '$telf', '$direccion','$email','$monto','$codigo_venta','izipay','pendiente')");
+        $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,monto,fecha,cod,metodo,estado) VALUES('$nombre', '$telf', '$direccion','$email','$monto',NOW(),'$codigo_venta','izipay','pendiente')");
         $_SESSION['pago']="iz";
         $_SESSION['cod']=$codigo_venta;
         borrar_carro($cliente);
@@ -204,7 +204,7 @@ if (isset($iz)) {
         $codigo_venta = rand(10000,10000000);
         $monto = $total;
         
-        $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,monto,cod,metodo,estado) VALUES('$nombre', '$telf', '$direccion', '$email','$monto','$codigo_venta','transferencia','pendiente')");
+        $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,monto,fecha,cod,metodo,estado) VALUES('$nombre', '$telf', '$direccion', '$email','$monto',NOW(),'$codigo_venta','transferencia','pendiente')");
         $_SESSION['pago']="tf";
         $_SESSION['cod']=$codigo_venta;
         borrar_carro($cliente);
@@ -254,27 +254,19 @@ if (isset($iz)) {
                     <p>Pago por Izipay</p><br>
                     <button id="izipay" name="iz" class="izipay"><p>izipay</p></button>
                 </div>
-                <div class="MPagar">
-                    <p>Pago por Yape</p><br>
-                    <button id="yape" name="yp" class="yape"><p>Yape</p></button>
-                </div>
             </div>
         </form>
         <div class="MPagar" >
             <p>Pago por Mercado pago</p><br>
             <form action="process.php?method=mercado_pago" method="POST" id="mp">
                 <script src="https://www.mercadopago.com.pe/integrations/v1/web-payment-checkout.js"
-                data-preference-id="<?php echo $preference->id; #if($preference->id){add($preference->id);}?>">
+                data-preference-id="<?php echo $preference->id;?>">
                 </script>
             </form>
         </div> 
     </section>
 </div>
 <?php
-function add($v)
-{
-    $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre) VALUES('$v')");
-}
 if(isset($_SESSION['cod']) && $_SESSION['cod']!=""){
     mostrar_cod();
 }
@@ -311,7 +303,6 @@ var email = form.email;
     var checkbox = document.getElementById('btn-tyc');
     var btn_tf = document.getElementById('transfer');
     var btn_iz = document.getElementById('izipay');
-    var btn_yp = document.getElementById('yape');
     
     disabled();
     // checkbox.addEventListener('click', function() {
@@ -320,7 +311,6 @@ var email = form.email;
             if(this.checked) {
                 btn_tf.disabled = false;   
                 btn_iz.disabled = false;   
-                btn_yp.disabled = false;   
                 btn_mp.style.display = "block";  
             }else{
                 disabled();
@@ -335,7 +325,6 @@ function disabled() {
     btn_mp.style.display = "none"; 
     btn_tf.disabled = true;   
     btn_iz.disabled = true;   
-    btn_yp.disabled = true;   
 }
 
 function send_data(){
@@ -358,20 +347,11 @@ form_mp.addEventListener('submit', function(){
     })
     .then(function (res) {
         if (res.ok) {
-            console.log("Datos enviados");
+            return res.text();
         } else {
             throw "Error weyyyyyy nooooooooooooooo";
         }
     })
-    // .then(function (info_prod) {
-    //     var img = info_prod.img;
-    //     var nombre = info_prod.nombre;
-    //     var precio = info_prod.precio;
-    //     var categoria = info_prod.categoria;
-    //     console.log(info_prod);
-    //     // inf=0
-    //     printInfoProd(nombre,precio,categoria,img);
-    // })
     .catch(function (err) {
         console.log(err);
     });

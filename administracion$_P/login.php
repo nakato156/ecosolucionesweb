@@ -16,7 +16,7 @@ include "../configs/funciones.php";
                 $r = mysqli_fetch_array($q);
                 session_start();
                 $_SESSION['chika'] = $r['id'];
-                header("location: modled.php");
+                header("location: index.php");
             }else{ //si no existe el usuario manda una alerta
                 ?>
                 <script>
@@ -47,7 +47,6 @@ include "../configs/funciones.php";
     <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 </head>
 <body>
-<body>
     <div id="login">
         <h3 class="text-center text-white pt-5">Panel de administracion Ecosol</h3>
         <div class="container">
@@ -71,7 +70,5 @@ include "../configs/funciones.php";
             </div>
         </div>
     </div>
-</body>
-
 </body>
 </html>

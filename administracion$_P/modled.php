@@ -6,22 +6,6 @@ check_admin();
 //variable de la base de datos
 $mysqli = mysqli_connect($host_mysql, $user_mysql,$pass_mysql,$bd_mysql);
 
-function delete($idp)
-{
-    echo "Hola"+$idp;
-}
-if(isset($_REQUEST['id'])){
-    $_REQUEST['id'] = $id;
-    echo "id: ".$id;
-    // var_dump($id);exit;
-    $q = mysqli_query($mysqli,"SELECT * FROM productos WHERE id = 1");
-    $rp = mysqli_fetch_array($q);
-    echo "prodcusto".$q['nombre'];
-}
-function eliminar_producto($id)
-{
-    mysqli_query($mysqli,"DELETE FROM productos WHERE id ='$id'");    
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
