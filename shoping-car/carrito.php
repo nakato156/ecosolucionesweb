@@ -2,6 +2,38 @@
 include "../configs/config.php";
 include "../configs/funciones.php";
 
+if (isset($_POST['plus'])) {
+    $plus = $_POST['plus'];
+    $productos_carro = $_SESSION['carrito'];
+    for($i=0;$i<count($productos_carro); $i++){
+        if ($productos_carro[$i]['id'] == $plus) {
+            $match  = true;
+            $num = $i;
+        }
+    }
+    if ($match == true) {
+        $productos_carro[$num]['cantidad']=$productos_carro[$num]['cantidad']+1;
+        $_SESSION['carrito'] = $productos_carro;
+    }
+    $cant = json_encode($_SESSION['carrito'][0]);
+    echo $cant;
+}
+if (isset($_POST['minus'])) {
+    $minus = $_POST['minus'];
+    $productos_carro = $_SESSION['carrito'];
+    for($i=0;$i<count($productos_carro); $i++){
+        if ($productos_carro[$i]['id'] == $minus) {
+            $match  = true;
+            $num = $i;
+        }
+    }
+    if ($match == true) {
+        $productos_carro[$num]['cantidad']=$productos_carro[$num]['cantidad']-1;
+        $_SESSION['carrito'] = $productos_carro;
+    }
+    $cant = json_encode($_SESSION['carrito'][0]);
+    echo $cant;
+}
 ?>
 <link rel="stylesheet" type="text/css" href="../css/cssProducts.css">
 <link rel="stylesheet" type="text/css" href="../styles.css">
@@ -17,16 +49,8 @@ include "../configs/funciones.php";
         <td></td>
     </tr>
 <?php
-// session_start();
 
-function borrar_carro($q)
-{
-    if ($q) {
-        unset($_SESSION['carrito']);
-        mostrar_cod();
-    }
-}
-if (isset($_SESSION['carrito']) && !isset($_SESSION['cod'])) {
+if (isset($_SESSION['carrito'])) {
     if (isset($_REQUEST['id']) && isset($_REQUEST['cant'])) {
         $productos_carro = $_SESSION['carrito'];
         $match = false;
@@ -154,7 +178,7 @@ if (!isset($_SESSION['carrito'])) {
         $item->unit_price = $carrito[$i]['precio']+(($carrito[$i]['precio']*4)/100);;
         $datosProductos[]=$item;
     }
-            
+
     $preference->items = $datosProductos;
     $preference->save();
     if (isset($_SESSION['carrito'])) {
@@ -168,9 +192,9 @@ if (!isset($_SESSION['carrito'])) {
         <td><img src="../img-products/<?php echo $carrito[$i]['img'];?>" alt=""></td>
         <td><?php echo $carrito[$i]['nombre'];?></td>
         <td><?php echo $carrito[$i]['precio'];?></td>
-        <td><?php echo $carrito[$i]['cantidad'];?></td>
+        <td id="cantidad"><?php echo $carrito[$i]['cantidad'];?></td>
         <td><?php echo $carrito[$i]['precio'] * $carrito[$i]['cantidad'];?></td>
-        <td><button name="plus" class="icon-plus"></button><button name="minus" class="icon-minus"></button></td>
+        <td><button name="plus" onclick="plus(<?=$carrito[$i]['id']?>);" class="icon-plus"></button><button name="minus" onclick="minus(<?=$carrito[$i]['id']?>);" class="icon-minus"></button></td>
     </tr>
 <?php 
     }
@@ -270,11 +294,13 @@ if (isset($iz)) {
 if(isset($_SESSION['cod']) && $_SESSION['cod']!=""){
     mostrar_cod();
 }
+
 function mostrar_cod()
 {
     $cod = $_SESSION['cod'];
     echo "<p>Codigo de venta: $cod</p><br><p>Asegures de guardarlo para cualquier reclamo</p>";
 }
+
 if (isset($_REQUEST['nombre'])) {
     $nombre = $_REQUEST['nombre'];
     $mail = $_REQUEST['correo'];
@@ -289,6 +315,14 @@ if (isset($_REQUEST['nombre'])) {
         'monto' => $total
     );
     $_SESSION['mp_data']=$data;
+}
+
+function borrar_carro($q)
+{
+    if ($q) {
+        unset($_SESSION['carrito']);
+        mostrar_cod();
+    }
 }
 ?>
 <script>
@@ -358,5 +392,48 @@ form_mp.addEventListener('submit', function(){
 })
 }
 // });
-
+function plus(id) {
+    const data = new FormData();
+    data.append("plus", id);
+    fetch('',{
+        method:"POST",
+        body: data,
+    })
+    .then(function (res) {
+        if (res.ok) {
+            return res.text();
+        }else{
+            throw "error"
+        }
+    })
+    .then(function (plus) {
+        // alert()
+        document.location.reload();
+    })
+    .catch(function (err) {
+        console.log(err);
+    })
+}
+function minus(id) {
+    const data = new FormData();
+    data.append("minus", id);
+    fetch('',{
+        method:"POST",
+        body: data,
+    })
+    .then(function (res) {
+        if (res.ok) {
+            return res.text();
+        }else{
+            throw "error"
+        }
+    })
+    .then(function (plus) {
+        // alert()
+        document.location.reload();
+    })
+    .catch(function (err) {
+        console.log(err);
+    }) 
+}
 </script>
