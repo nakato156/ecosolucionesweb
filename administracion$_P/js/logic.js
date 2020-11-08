@@ -1,29 +1,34 @@
 $(document).ready(function() {
+	let form = document.getElementById("addProducts");
 	let edit = false;
 	obtenerd()
 	// ENVIAR DATOS
 	$('#addProducts').submit(function (e) {
-		var datos = new FormData($('#addProducts')[0]);
+		const datos = new FormData($('#addProducts')[0]);
 		let url = edit === false ? 'insertpd.php' : 'edit.php';
-		$.ajax({
-			url: 'php/'+url,
-			type: 'POST',
-			data: datos,
-			contentType: false,
-			processData: false,
-			success: function (datos){
-				console.log(datos)
-				$('#addProducts').trigger('reset');
-				obtenerd();
-				if(url === "edit.php"){
-					alert(datos);
-					edit = false;
-					console.log(edit)
+		if (verify()) {
+			$.ajax({
+				url: 'php/'+url,
+				type: 'POST',
+				data: datos,
+				contentType: false,
+				processData: false,
+				success: function (datos){
+					// console.log(datos)
+					msgAlert(datos);
+					$('#addProducts').trigger('reset');
+					obtenerd();
+					if(url === "edit.php"){
+						alert(datos);
+						edit = false;
+						console.log(edit)
+					}
 				}
-			}
-		})
+			})
+		}else{
+			msgAlert("Debe llenar los campos requeridos");
+		}
 		e.preventDefault()
-		console.log(datos)
 	});
 	// OBTENER LOS DATOS
 	function obtenerd(){
@@ -36,15 +41,9 @@ $(document).ready(function() {
 				prod.forEach(pd => {
 					tem += `
 				<tr idp="${pd.id}">
-					<td class="text-center">
-						<div class="radio">
-							<label>
-								<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-							</label>
-						</div>
-					</td>
 					<td class="img_carro"><img src="../img-products/${pd.imagen}"></td>
 					<td>${pd.name}</td>
+					<td>${pd.descript}</td>
 					<td>${pd.precio}</td>
 					<td>${pd.categoria}</td>
 					<td class="text-center">
@@ -67,7 +66,7 @@ $(document).ready(function() {
 			$.post('php/eliminarpd.php', {id}, function(res){
 				obtenerd();
 				console.log(res);
-				
+				msgAlert(res);
 			});
 		}
 	});
@@ -87,4 +86,30 @@ $(document).ready(function() {
 			edit = true;
 		});
 	})
+	function msgAlert(msg) {
+		let content = document.getElementById("alert");
+		let div = document.createElement("div");
+		let p = document.createElement("p");
+
+		div.setAttribute("class", "col-md-12");
+		p.setAttribute("class", "text-center bg-warning well");
+
+		content.appendChild(div);
+		div.appendChild(p);
+
+		p.innerHTML = msg;
+		// let alert = document.getElementById("nombre");
+		// alert.style.background="red";
+		setInterval(function(){
+			div.remove();
+		},4000);
+	}
+	function verify() {
+		if (form.nombre.value !="" && form.precio.value !="" && form.categoria.value !="" && form.descripcion.value !="" && form.imagen.value !="") {
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
 })

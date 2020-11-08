@@ -1,3 +1,5 @@
+var hostLocal = "http://localhost:8000/Page-ecosolwebtel";
+var host = "https://ecosolucionesweb.com";
 window.addEventListener("load", () => {
   var imagenes = [];
   imagenes[0] = "img/slider/img-gameboy.jpg";
@@ -91,7 +93,7 @@ function agregar_carro(idp) {
   });
 }
 //btnpay
-// var dats = document.getElementById("dataUser");
+
 
 //func ventana modal
 var conteiner = document.getElementById("modal");
@@ -144,32 +146,37 @@ function info_producto(id) {
       }
     })
     .then(function (info_prod) {
-      var img = info_prod.img;
-      var nombre = info_prod.nombre;
-      var precio = info_prod.precio;
-      var categoria = info_prod.categoria;
+      let img = info_prod.img;
+      let nombre = info_prod.nombre;
+      let descript = info_prod.descripcion;
+      let precio = info_prod.precio;
+      let categoria = info_prod.categoria;
+      let ficha = info_prod.ficha;
       console.log(info_prod);
-      // inf=0
-      printInfoProd(nombre,precio,categoria,img);
+      printInfoProd(nombre,descript,precio,categoria,img,ficha);
     })
     .catch(function (err) {
       console.log(err);
     });
 }
-function printInfoProd(name,precio,cat,img) {
-  var infProd = document.createElement("div");
-  var cajaP = document.createElement("div");
-  var img_infoP = document.createElement("img");
-  var h3 = document.createElement("h3");
-  var p = document.createElement("p");
-  var x = document.createElement("i");
-
+let r = 0;
+function printInfoProd(name,descript,precio,cat,img,ficha) {
+  reset(r);
+  let infProd = document.createElement("div");
+  let cajaP = document.createElement("div");
+  let img_infoP = document.createElement("img");
+  let h3 = document.createElement("h3");
+  let p = document.createElement("p");
+  let description = document.createElement("p");
+  let x = document.createElement("i");
   
   infProd.setAttribute("class", "infoProd");
+  infProd.setAttribute("id", "infoProd");
   cajaP.setAttribute("class", "cajaP");
   img_infoP.setAttribute("src", "img-products/"+img);
   h3.setAttribute("class", "infP");
   p.setAttribute("class", "parrafo");
+  description.setAttribute("class", "parrafo description");
   x.setAttribute("class", "icon-plus cerrar");
   
   infoP.appendChild(infProd);
@@ -178,10 +185,11 @@ function printInfoProd(name,precio,cat,img) {
   infProd.appendChild(cajaP);
   cajaP.appendChild(img_infoP);
   cajaP.appendChild(p);
+  cajaP.appendChild(description);
   if(cat === "computo" ||  cat === "importaciones"){
-    var fichaTecnica = document.createElement("div");
-    var viewFT = document.createElement("button");
-    var textFT = document.createElement("p");
+    let fichaTecnica = document.createElement("div");
+    let viewFT = document.createElement("button");
+    let textFT = document.createElement("p");
 
     fichaTecnica.setAttribute("class","fichaTec");
     viewFT.setAttribute("class","viewFT");
@@ -195,18 +203,40 @@ function printInfoProd(name,precio,cat,img) {
 
     textFT.innerHTML="Ficha tecnca : "
     viewFT.innerHTML="Ver Ficha"
+
+    viewFT.addEventListener("click", ()=>{
+      if (ficha == "" || ficha == "undefined") {
+        alert("Producto sin ficha tecnica");
+      }else{
+        window.open(hostLocal+"/fichas-tecnicas doc/"+ficha);
+      }
+    })
   }
 
   infoP.style.display = "block";
-  // infoP.style.position = "absolute";
-  infoP.style.margin = "auto";
+  if (screen.width <= 590) {
+    infProd.style.width = (screen.width-60)+"px";
+  }
   h3.style.color = "#000";
   h3.style.padding = "20px";
   h3.innerHTML = name;
   p.innerHTML = "Precio: "+"S/."+precio+"<br>"+"Categoria: "+cat;
+  description.innerHTML = descript;
+  r = 1;
+  console.log(descript);
   x.addEventListener('click',()=>{
     infProd.remove()
     infoP.style.display="none";
+    r = 0;
   })
-// console.log(inf)
+  function reset(r) {
+    if(r == 1){
+      let resetInfo = document.getElementById("infoProd");
+      resetInfo. parentNode. removeChild(resetInfo);
+      r = 0;
+      return r;
+    }else{
+      return r;
+    }
+  }
 }

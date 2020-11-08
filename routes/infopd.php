@@ -1,7 +1,7 @@
 <?php
 include "../configs/config.php";
 $mysqli = mysqli_connect($host_mysql, $user_mysql,$pass_mysql,$bd_mysql);
-
+// information of products
 if (isset($_POST['id'])) {    
     $id = $_POST['id'];
 
@@ -10,6 +10,12 @@ if (isset($_POST['id'])) {
     $res = mysqli_fetch_array($q);
     $cat = $res['id_categoria'];
 
+    if ($res['ficha_tecnica'] =="") {
+        $ficha = Null;
+    }else{
+        $ficha = $res['ficha_tecnica'];
+    }
+
     $qcat = mysqli_query($mysqli,"SELECT * FROM categorias WHERE id = '$cat'");    
     $categoria = mysqli_fetch_array($qcat);
     $cat = $categoria['categoria'];
@@ -17,8 +23,10 @@ if (isset($_POST['id'])) {
     $info[] = array(
         'img' => $res['imagen'],
         'nombre' => $res['nombre'],
+        'descripcion'=> $res['descripcion'],
         'precio' => $res['precio'],
-        'categoria' => $cat
+        'categoria' => $cat,
+        'ficha' => $ficha
     );
     $info_product = json_encode($info[0]);
     echo $info_product;
@@ -29,6 +37,7 @@ if (isset($_REQUEST['codigo'])) {
     $q = mysqli_query($mysqli,"SELECT * FROM pedidos WHERE cod = '$cod'");
     
     $pedido = mysqli_fetch_array($q);
+
     $info[] = array(
         'id' => $pedido['id'],
         'nombre' => $pedido['nombre'],

@@ -14,6 +14,14 @@ function check_admin(){
 		header("location:login.php");
 	}
 }
+function validarEmail($email)
+{
+	if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		return $email;
+	}else{
+		die("email no valido");
+	}
+}
 function redir($var){
 	?>
 	<script>

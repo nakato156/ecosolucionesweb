@@ -12,41 +12,48 @@ if (isset($_REQUEST['nombre']) !="") {
 	$precio = $_REQUEST['precio'];
 	// $oferta = $_REQUEST['oferta'];
 	$categoria = $_REQUEST['categoria'];
+	$descripcion = $_POST['descripcion'];
 
+	$fichaTec = $_FILES['ficha']; 
 	$imagen = $_FILES['imagen'];
-	if (is_uploaded_file($_FILES['imagen']['tmp_name'])) {
-		if ($imagen["type"] == "image/jpg" or $imagen["type"] == "image/jpeg") {
 
+	if (is_uploaded_file($_FILES['imagen']['tmp_name']) && is_uploaded_file($_FILES['ficha']['tmp_name'])) {
+		if ($imagen["type"] == "image/jpg" or $imagen["type"] == "image/jpeg" or $imagen["type"] == "image/png") {
 			$img = $name.rand(0,1000).".png";
 			$rut = "../../img-products/";
 			$path = $rut.$img;
 
 			if(move_uploaded_file($_FILES['imagen']['tmp_name'], $path)){ 
-
-				mysqli_query($mysqli, "INSERT INTO productos (nombre,precio,imagen,id_categoria) VALUES ('$name','$precio','$img','$categoria')");
+				$file = $name.rand(0,1000).".pdf";
+				$route = "../../fichas-tecnicas doc/".$file;
+				if($fichaTec["type"]=="application/pdf"){ 
+					if (move_uploaded_file($_FILES['ficha']['tmp_name'], $route)) {
+						mysqli_query($mysqli, "INSERT INTO productos (nombre,precio,imagen,descripcion,ficha_tecnica,id_categoria) VALUES ('$name','$precio','$img','$descripcion','$file','$categoria')");
+						echo "Producto agregado satisfactoriamente";
+					}
+				}else{
+					echo "Solo se permiten archivos PDFs";
+					die();
+				}
 			}
+		}else{
+			echo "error al subir la imagen";
+			die();
+		}
+	}else{
+		if (is_uploaded_file($_FILES['imagen']['tmp_name'])) {
+			if ($imagen["type"] == "image/jpg" or $imagen["type"] == "image/jpeg" or $imagen["type"] == "image/png") {
+				$img = $name.rand(0,1000).".png";
+				$rut = "../../img-products/";
+				$path = $rut.$img;
+	
+				if(move_uploaded_file($_FILES['imagen']['tmp_name'], $path)){ 
+					mysqli_query($mysqli, "INSERT INTO productos (nombre,precio,imagen,descripcion,id_categoria) VALUES ('$name','$precio','$img','$descripcion','$categoria')");
+				}
+			}
+		}else{
+			die();
 		}
 	}
-	
- 	// cargar img del producto
-
-	// if (is_uploaded_file($_FILES['name'])){
-
-	// 	$imagen = $name.rand(0,1000).".png";
-
-	// 	}
-
- 	// cargar archivo virtual
-	// if (is_uploaded_file($_FILES['descargable']['tmp_name'])) {
-	// 	$descargable =$descargable.rand(0,1000).$_FILES['descargable']['name'];
-	// 	move_uploaded_file($_FILES['descargable']['tmp_name'], "./ebook/".$descargable);
-	// }
-
-
-	// if (is_uploaded_file($_FILES['descargable']['tmp_name'])) {
-	// 	$descargable =$descargable.rand(0,1000).$_FILES['descargable']['name'];
-	// 	move_uploaded_file($_FILES['descargable']['tmp_name'], "./ebook/".$descargable);
-	// }
-
 }
 ?>

@@ -7,7 +7,7 @@
         <h3>No dejes pasar nuestras ofertas increibles</h3><br>
         <i class="icon-code" style="font-size:80px;"></i>
     </div>
-    <div style="height: 150px; width:100%; overflow: hidden;" class="waveInf"><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M-13.26,24.17 C134.59,158.38 377.82,185.03 504.22,28.13 L500.00,150.00 L0.00,150.00 Z" style="stroke: none; fill: #fff;"></path></svg></div>
+    <div style="width:100%; overflow: hidden;" class="waveInf"><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M-13.26,24.17 C134.59,158.38 377.82,185.03 504.22,28.13 L500.00,150.00 L0.00,150.00 Z" style="stroke: none; fill: #fff;"></path></svg></div>
 </section>
 <section class="info">
     <h2>Informaci&oacute;n</h2>

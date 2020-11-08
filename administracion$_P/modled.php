@@ -58,6 +58,18 @@ $mysqli = mysqli_connect($host_mysql, $user_mysql,$pass_mysql,$bd_mysql);
                         </div>
                         <div class="col-md-6 subir-archivos">
                             <div class="form-group">
+                            <label>Descripci&oacute;n del Producto</label>
+                            <input type="text" id="descript" name="descripcion" class="form-control">
+                            <label>Subir ficha tecnica</label>
+                            <div class="input-group">
+                                    <span class="input-group-btn"> 
+                                        <div class="btn btn-default carga-archivo-input"> 
+                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                            <span class="carga-archivo-input-title">Seleccionar ficha</span>
+                                            <input type="file" name="ficha" id="FT"/>
+                                        </div>
+                                    </span>
+                                </div>
                                 <label>Subir Imagen del Producto</label>
                                 <div class="input-group">
                                     <input placeholder="" name="txtImg" id="txt-img" type="text" class="form-control carga-archivo-filename" disabled="disabled">
@@ -70,31 +82,13 @@ $mysqli = mysqli_connect($host_mysql, $user_mysql,$pass_mysql,$bd_mysql);
                                         </div>
                                     </span>
                                 </div>
-                            </div>                                                  
-                            <div class="row">
-                                <div class="col-md-6">
-                                        <div class="col-md-6">
-                                            Tamaño de la imagen
-                                        </div>
-                                        <div class="col-md-6">
-                                            523.0 KB
-                                        </div>                                
-                                    </div>
-                                </div>                       
-                            </div>                   
+                            </div>                                                                    
                         </div>                
                     <button id="addProduct" class="btn btn-primary btn-block">Subir Producto</button>
                 </div>
             </form>
-            <?php
-            if(1==0){
-            ?>
-            <div class="col-md-12">
-                <p class="text-center bg-warning well">Error</p>
-            </div> 
-            <?php
-            }
-            ?>
+            <div id="alert">
+            </div>
         </div>
     </div>
     <div class="row">
@@ -106,9 +100,9 @@ $mysqli = mysqli_connect($host_mysql, $user_mysql,$pass_mysql,$bd_mysql);
                 <table class="table table-bordered table-hover vmiddle">
                     <thead>
                         <tr>
-                            <th></th>
                             <th>Img</th>
                             <th>Nombre</th>
+                            <th>Descripcion</th>
                             <th>Precio</th>
                             <th>Categoria</th>
                             <th>Acciones</th>

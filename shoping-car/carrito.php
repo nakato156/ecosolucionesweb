@@ -207,6 +207,8 @@ if (isset($iz)) {
         $email = mysqli_real_escape_string($mysqli,$email);
         $codigo_venta = rand(10000,10000000);
         $monto = $total+(($total*4)/100);
+        
+        validarEmail($email);
 
         $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,monto,fecha,cod,metodo,estado) VALUES('$nombre', '$telf', '$direccion','$email','$monto',NOW(),'$codigo_venta','izipay','pendiente')");
         $_SESSION['pago']="iz";
@@ -228,6 +230,8 @@ if (isset($iz)) {
         $codigo_venta = rand(10000,10000000);
         $monto = $total;
         
+        validarEmail($email);
+
         $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,monto,fecha,cod,metodo,estado) VALUES('$nombre', '$telf', '$direccion', '$email','$monto',NOW(),'$codigo_venta','transferencia','pendiente')");
         $_SESSION['pago']="tf";
         $_SESSION['cod']=$codigo_venta;

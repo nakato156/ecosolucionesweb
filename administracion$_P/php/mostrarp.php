@@ -46,6 +46,7 @@ while ($rp=mysqli_fetch_array($prod)) {
 			'imagen' => $rp['imagen'],
 			'name' => $rp['nombre'],
 			'categoria' => $r['categoria'],
+			'descript' => $rp['descripcion'],
 			'precio' => $rp['precio'],
 			'precioT' => $precioTotal,
 			'oferta' => $nd
