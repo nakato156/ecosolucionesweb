@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	let preview = document.getElementById("img");
+	// let newImg = document.getElementById("newImg")
 	let form = document.getElementById("addProducts");
 	let edit = false;
 	obtenerd()
@@ -6,7 +8,7 @@ $(document).ready(function() {
 	$('#addProducts').submit(function (e) {
 		const datos = new FormData($('#addProducts')[0]);
 		let url = edit === false ? 'insertpd.php' : 'edit.php';
-		if (verify()) {
+		if (verify(edit)) {
 			$.ajax({
 				url: 'php/'+url,
 				type: 'POST',
@@ -14,12 +16,12 @@ $(document).ready(function() {
 				contentType: false,
 				processData: false,
 				success: function (datos){
-					// console.log(datos)
+					console.log(datos)
 					msgAlert(datos);
 					$('#addProducts').trigger('reset');
+					$('#previewImg').children("div").remove()
 					obtenerd();
 					if(url === "edit.php"){
-						alert(datos);
 						edit = false;
 						console.log(edit)
 					}
@@ -78,8 +80,13 @@ $(document).ready(function() {
 		$.post('php/eliminarpd.php', {id_edit}, function(res){
 			const prod = JSON.parse(res);
 			$('#nombre').val(prod.nombre);
-			$('#txt-img').val("aun no disponible");
-			// $('#img').val(prod.imagen);
+			$('#descript').val(prod.description);
+			$('#txt-img').val(prod.imagen);
+			let temp = `
+			<div class="preview"><img src="../img-products/${prod.imagen}"></div>
+			`;
+			let cont = document.getElementById("previewImg");
+			cont.innerHTML = temp;
 			$('#precio').val(prod.precio);
 			$('#categoria').val(prod.categoria);
 			$('#idn').val(prod.id);
@@ -104,12 +111,47 @@ $(document).ready(function() {
 			div.remove();
 		},4000);
 	}
-	function verify() {
-		if (form.nombre.value !="" && form.precio.value !="" && form.categoria.value !="" && form.descripcion.value !="" && form.imagen.value !="") {
-			return true;
+	function verify(accion) {
+		if (accion) {
+			if (form.nombre.value !="" && form.precio.value !="" && form.categoria.value !="" && form.descripcion.value !="") {
+				return true;
+			}else{
+				return false;
+			}
 		}else{
-			return false;
+			if (form.nombre.value !="" && form.precio.value !="" && form.categoria.value !="" && form.descripcion.value !="" && form.imagen.value !="") {
+				return true;
+			}else{
+				return false;
+			}
 		}
-		
+	}
+
+	preview.addEventListener('change', function () {	
+		let txtImg = document.getElementById("txt-img");
+		let files = this.files;
+		let element;
+		let imgSupport = ["image/jpeg", "image/png", "image/jpg"];
+		let elementInvalid = false;
+
+		element = files[0];
+		if (imgSupport.indexOf(element.type) !=-1) {
+			txtImg.value = element.name;
+			createPreview(element);
+		}else{
+			elementInvalid = true;
+		}
+		if (elementInvalid) {
+			alert("Typo de imagen no valida");
+		}
+	})
+
+	function createPreview(file){
+		let imgUrl = URL.createObjectURL(file);
+		let temp = `
+		<div class="preview"><img src="${imgUrl}"></div>
+		`;
+		let cont = document.getElementById("previewImg");
+		cont.innerHTML = temp;
 	}
 })

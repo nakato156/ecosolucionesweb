@@ -82,6 +82,7 @@ $mysqli = mysqli_connect($host_mysql, $user_mysql,$pass_mysql,$bd_mysql);
                                         </div>
                                     </span>
                                 </div>
+                                <div class="contPreview"id="previewImg"></div>
                             </div>                                                                    
                         </div>                
                     <button id="addProduct" class="btn btn-primary btn-block">Subir Producto</button>

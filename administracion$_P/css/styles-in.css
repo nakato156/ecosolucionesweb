@@ -98,6 +98,23 @@ button{
     height: 54px;
     border-radius: 50%;
 }
+.contPreview{
+    left: 0;
+    float: left;
+    position: relative;
+    /* width: 100%; */
+    justify-content: start;
+}
+.preview{
+    left: 10px;
+    /* position: absolute; */
+}
+.preview>img{
+    margin-top: 10px;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+}
 /* --------------------------------dashboard-------------------------------- */
 /*Login Signup Page*/
 a:focus,a:hover,a{

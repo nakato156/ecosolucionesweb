@@ -17,7 +17,6 @@ h1, h2, h3, h4, h5, h6{
 header::before{
 	content: "";
 	display: block;
-    margin: 10px;
     /* box-sizing: inherit; */
 } 
 
@@ -27,25 +26,23 @@ header::before{
 	justify-content: space-around;
 }
 .logo{
-	padding: 0 10px;
-	width: 50%;
+	display: inline-flex;
+    padding-left: 15px;
+	width: 15%;
 }
 .logo >img {
-	width: 200px;
-	height: 100px;
+	width: 48px;
+	height: 48px;
 }
 
 .busqueda{
-	display: flex;
-	width: 30%;
-	padding: 5px 10px; 
-	text-align: end;
+	margin-left: 200px;
+    display: inline-flex;
 }
 
 .cont {
 	margin-top: 20px;
-	display: flex;
-	width: 300px;
+	display: inline-flex;
 	height: 30px;
 }
 
@@ -54,18 +51,97 @@ form >div .icon-search {
 	padding: 2px;
 	height: 100%;
 	width: 20px;
-	background: #6fce20;
-	color: #222022;
+	background: #6d6c6d;
+	color: #575353;
 }
 
 form >div >input{
 	color: #000;
-	width: 260px;
+	width: 500px;
 	height: 100%;
 	border: 1px solid #ccc;
-	outline-color: #cecece;
+	outline: none;
 }
 
+/* menu */
+.cat{
+	display: inline-flex;
+	width: 100%;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.cat ul {
+	cursor: pointer;
+	list-style: none;
+	text-decoration: none;
+	width: 140px;
+}
+.cat li {
+	display: flex;
+	width: 180px;
+	position: relative;
+	line-height: 2rem;
+}
+
+.cat li ul{
+	position: absolute;
+	display: none;
+}
+.cat li:hover > ul{
+	display: block;
+}
+.cat a{
+	width: 180px;
+	color: #000;/*#f2f2f2*/
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	transition: .3s;
+}
+.menu ul ul{
+	display: none;
+}
+
+/* Primer nivel */
+.menu {
+	margin-top: 5px;
+	background: none;
+	display: table;
+}
+
+.menu > a{
+	color: #f2f2f2;
+}
+/* .cat > ul > li {
+	float: left;
+} */
+
+/* Segundo nivel */
+.cat li li {
+	padding: 2px 5px;
+	background: #f0eeee;
+}
+.menu > ul{
+	top: 100%;
+}
+
+.flecha {
+	display: inline-flex;
+	cursor: pointer;
+	font-size: 17px;
+	align-items: center;
+	text-align: center;
+	align-content: center;
+	width: 30px;
+	padding-left: 10px;
+	height: auto;
+	color: #1FDE82;
+}
+
+.cat a:hover {
+	background: rgba(192, 192, 188, 0.2);
+}
 /* --------------------------------all menu-------------------------------- */
 .default {
 	display: none;
@@ -76,26 +152,24 @@ form >div >input{
 }
 
 nav{
+	top: 0px;
 	width: 100%;
-	height: auto;
-	background: #6fce20;
+	height: 105px;
+	background: #1254a5;
 	border-bottom: 1px solid transparent;
 	box-shadow: 1px 1px 10px 0 rgba(103, 103, 103, 0.2);
-	white-space: pre-wrap;
 }
 
 .carrito {
-	/* visibility: hidden; */
 	font-size: 26px;
 	text-align: center;
 	position: fixed;
 	width: 45px;
 	height: 45px;
 	border-radius: 50%;
-	color: #222022;
+	color: #fff;
 	padding: 6px 4px 0 0;
 	transition: ease-in-out 0.7s;
-	/* background: chartreuse; */
 	z-index: 10;
 	right: 30px;
 }
@@ -119,7 +193,6 @@ nav{
 }
 .tablaCarrito{
 	margin-top: 20px;
-	/* margin-left: 30px; */
 	border-collapse: collapse;
 }
 .cbx {
@@ -281,7 +354,6 @@ form >input{
 .MPagar {
 	width: auto;
 	padding: 10px;
-	/* background: chartreuse; */
 	margin-left: 10px;
 	margin-right: 10px;
 }
@@ -324,42 +396,7 @@ form >input{
 	text-decoration: none;	
 	font-size: 18px;
 }
-/* menu */
-.Menu {
-	top: 0;
-}
-.Menu .sub{
-	background: #000;
-	display: block;
-	display: none;
-}
-.Menu a{
-	text-align: center;
-    display: flex;
-    color: #efedef;
-    font-weight: 300;
-    text-decoration: none;
-}
-.Menu li{
-	max-width: 200px;
-	top: 0;
-	margin: 0 6px;
-	padding: 20px 7px;
-	transition: ease-in-out 0.5s;
-}
-.Menu ul {
-	text-align: center;
-	padding: 0 15px;
-    list-style: none;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-around;
-}
-.Menu li:hover {
-	background: rgba(206,204,206, .2);
-}
-
-/* ----------------------------------slider---------------------------------- */
+/*----------------------------------slider---------------------------------- */
 .sliders{
 	top: 0;
 	width: 100%;
@@ -386,21 +423,6 @@ form >input{
     top: 0;
 }
  
-.N{
-	display: flex;
-	justify-content: space-between;
-	height: 30px;
-	width: 100%;
-	align-items: center;
-	padding: 0 40px;
-}
-
-.categorias{
-    width: 20%;
-	justify-content: space-between;
-	align-items: center;
-}
-
 .catalogo{   
 	display: flex;
 	flex-wrap: wrap;
@@ -408,52 +430,6 @@ form >input{
 	justify-content: space-evenly;
 }
 
-.cat ul{
-    background: #cecece;
-    list-style: none;
-}
-
-.cat ul ul{
-    display: none;
-}
-
-.cat a {
-	width: 80%;
-    display: inline-block;
-    padding: 15px 20px;
-    color: #000;
-	text-decoration: none;
-}
-
-.cat a:hover{
-    background: rgba(76,73,71, 0.3);
-}
-
-.flecha {
-	font-size: 17px;
-	align-items: center;
-	text-align: center;
-	align-content: center;
-	border-left: 1px solid #4c4947;
-	display: inline-block;
-	width: 20%;
-	padding: 12px 10px;
-	height: 49px;
-	color: #1FDE82;
-}
-
-.flecha:hover {
-	background: rgba(0, 0, 0, 0.3);
-}
-
-.cat >ul >li >ul >li {
-	margin-left: 10px;
-}
-
-.cat ul li:hover ul{
-    display: none;
-    position: static;
-}
 /* --------------------cuerpo-------------------- */
 .productos{
     width: 75%;
@@ -500,16 +476,17 @@ form >input{
 .btn{
 	display: inline-flex;
 	border: none;
+	color: #fff;
 	width: auto;
 	height: auto;
-	background: #6fce20;
+	background: #1254a5;
 	border-radius: 5px;
 }
 .btn >.icon-carrito {
 	font-size: 18px;
 	text-align: center;
 }
-.btn > .icon-carrito, .a���d {
+.btn > .icon-carrito, .añd {
 	padding-top: 5px;
 	text-align: center;
 	margin-left: 7px;
@@ -526,14 +503,14 @@ form >input{
 	width: 500px;
 }
 /*footer*/
-footer{
-	background: #4c4947;
-	padding: 60px 0;
-	overflow: hidden;
-	flex-wrap: wrap;
-	display: flex;
-	justify-content: space-evenly;
-	margin: auto;
+footer {
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-evenly;
+    background: rgb(34, 32, 34);
+    padding: 60px 0px;
+    overflow: hidden;
+    margin: auto;
 }
 .Pfooter{
 	width: 20%;
@@ -595,74 +572,63 @@ footer{
 
 @media(max-width:1000px){
 
-	.Menu{
-		position: absolute; 
-		background: #36D1DC;  
-		background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC); 
-		background: linear-gradient(to right, #5B86E5, #36D1DC);
-		right: 0;
-		width: 100vw;
-		height: auto;
-		display: flex;
-		align-items: center;
-		flex-direction: column;
-		justify-content: space-between;
-		clip-path: circle(0.0% at 0 26%);
-	}
 	h1{
 		font-size: 40px;
 	}
-	.menudos{
-		position: absolute;
-		-webkit-clip-path: circle(140.9% at 0 0);
-		clip-path: circle(140.9% at 0 0);
-	}
-	.N{
-		padding: 0 10px;
-	} 
-	.categorias {
+	.cat {
+		transition: all 0.3s;
+		transform: translateX(-100%);
 		display: none;
 	}
+	.cat ul , .cat li, .cat a{
+		width: 100%;
+		display: block;
+	}
+	.cat ul li:hover ul{
+		display: none;
+		position: static;
+	}
+	.cat  ul li>a{
+		color: #000;
+	}
+	.cat ul li >a >div {
+		position: absolute;
+		right: 20px;
+	}
+	
+	.menudos{
+		top: 105px;
+		left: 0;
+		background: #e2e2e2;
+		position: absolute;
+		display: block;
+		width: 100%;
+		transform: translateX(0%);
+	}
+
 	.productos{
 		width: 100vw;
 		justify-content: space-evenly;
 	}
 
-	.N .Menu a{
-		color: #000;
-		text-align: center;
-	}
 	.hamb{
-		position: absolute;
+		top: 20px;
+		position: relative;
 		width: 60px;
 		text-align: center;
 		display: flex;
 		justify-content: center;
 		justify-items: center;
 	}
-    
-    .Menu {
-		text-align: center;
-        left: 0;
-        transition: all 0.3s;
-    }
-    .Menu>ul{
-		width: auto;
-		height: auto;
-        display: block;
+	.hamb>i{
+		color: #fff;
+		font-size: 30px;
 	}
-	.Menu>ul>li{
-		height: auto;
-	}
-    .Menu ul li:hover {
-		background: chocolate;
-        /* display: none; */
-    }
 
 	.carrito{
 		bottom: 60px;
 		right: 20px;
-		background: chartreuse;
+		background: #1254a5;
 		position: fixed;
 	}
 	/*service*/
@@ -678,7 +644,8 @@ footer{
 }
 @media(max-width:590px){
 	.logo {
-		width: 100%;
+		/* width: 100%; */
+		display: none;
 	}
 	.busqueda{
 		display: none;
@@ -705,7 +672,7 @@ footer{
 	}
 	.Pfooter h4{
 		font-size: 30px;
-		border-bottom: 1px solid #1FDE82;
+		border-bottom: 1px solid #1254a5;/*1FDE82*/
 	}
 	.Pfooter>img{
 		width: 100px;

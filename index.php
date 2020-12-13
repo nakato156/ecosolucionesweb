@@ -1,7 +1,7 @@
 <?php
 include "configs/config.php";
 include "configs/funciones.php";
-// var_dump($_SESSION['carrito']);
+$urlDev ="delopment";
 if(!isset($p)) {
 	$p = "principal";
 
@@ -29,67 +29,64 @@ if(!isset($_REQUEST['buscar'])){
 </head>
 <body>
     <header>
-		<section class="contenedor">
-			<div class="logo">
-				<img src="img/logo.png" alt="ecosolwebtelLogo">
-			</div>
-			<div class="busqueda">
-				<form action="" method="post">
+		<nav id="menu">
+			<div class="Menu navbar">
+				<div class="logo">
+					<img src="img/logo.png" alt="ecosolwebtelLogo">
+				</div>
+
+				<div class="busqueda">
+					<form action="" method="post">
 					<div class="cont"><input type="text" name="buscar" id="buscar" placeholder="  Buscar" value="<?=$busqueda?>"><div class="icon-search"></div></div>
-				</form>	
-			</div>
-		</section>
-		<nav class="navbar" id="menu">
-			<section class="N">
-				<div class="enlaces Menu">
+					</form>	
+				</div>
+
+				<section class="cat">
 					<ul>
-						<li><a href="?p=principal" class="selected">Inicio</a></li>
-						<li><a href="?p=ecologico">Ecologico</a></li>
-						<li><a href="?p=importaciones">Importaciones</a></li>
-						<li><a href="?p=computo">Computo</a></li>
-						<li><a href="?p=electro">Celulares y tablets</a></li>
-						<!-- <li><a href="?p=calzado">Calzado</a></li> -->
-						<!-- <li><a href="?p=carteras">Carteras</a></li> -->
-						<li><a href="?p=ropa_bebe">Ropa para bebe</a></li>
-						<!-- <li><a href="?p=cosmeticos">Cosmeticos</a></li> -->
-						<li><a href="?p=voz_ip">Voz/ip</a></li>		
-						<li><a href="?p=videovigilancia">Video Vigilancia</a></li>		
-						<li><a href="?p=cableado">Cableado estructurado</a></li>		
-						<li><a href="?p=cosmeticos">Cosmeticos</a></li>		
-						<li><a href="?p=electro_hogar">Electo hogar</a></li>		
+						<li  class="menu sub"><a>Categorias<div class="icon-down flecha"></div></a>
+							<ul>
+								<li><a href="?p=principal" class="selected">Inicio</a></li>
+								<li><a href="?p=ecologico">Ecologico</a></li>
+								<li><a href="?p=importaciones">Importaciones</a></li>
+								<li><a href="?p=computo">Computo</a></li>
+								<li><a href="?p=electro">Celulares y tablets</a></li>
+								<li><a href="?p=ropa_bebe">Ropa para bebe</a></li>
+								<li><a href="?p=voz_ip">Voz/ip</a></li>		
+								<li><a href="?p=videovigilancia">Video Vigilancia</a></li>		
+								<li><a href="?p=cableado">Cableado estructurado</a></li>		
+								<li><a href="?p=cosmeticos">Cosmeticos</a></li>		
+								<li><a href="?p=electro_hogar">Electo hogar</a></li>
+							</ul>
+						</li>
 					</ul>
-				</div>
-				<div class="hamb">
-					<i class="icon-menu"></i>
-				</div>
-			</section>
+					<ul>
+						<li class="menu sub"><a>Servicios<div class="icon-down flecha"></div></a>
+							<ul>
+								<li><a href="development?p=developer">Desarrollo web</a></li>
+								<li><a href="development">Diseño web</a></li>
+								<li><a href="development">Programas a medida</a></li>
+								<li><a href="development">Elaboracion de tienda virtual</a></li>
+								<li><a href="development">Elaboracion de aula virtual</a></li>
+								<li><a href="?p=prox">Cursos en Linea</a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul>
+						<li class="menu"><a href="?p=prox">Aula Virtual</a></li>
+					</ul>				
+				</section>		
+				<!--  -->
+			</div>
+			<div class="hamb">
+				<i class="icon-menu"></i>
+			</div>
 		</nav>
 	</header>
 	<section class = "cuerpoP">
-		<div class="categorias">
-			<section class="cat">
-				<ul>
-					<li class="submenu"><a href="development">Servicios</a><div class="icon-down flecha"></div>
-						<ul>
-							<li><a href="development?p=developer">Desarrollo web</a></li>
-							<li><a href="development">Diseño web</a></li>
-							<li><a href="development">Programas a medida</a></li>
-							<li><a href="development">Elaboracion de tienda virtual</a></li>
-							<li><a href="development">Elaboracion de aula virtual</a></li>
-							<li><a href="?p=prox">Cursos en Linea</a></li>
-						</ul>
-					</li>
-					<li><a href="?p=prox">Aula Virtual</a></li>
-				</ul>				
-			</section>
-		</div>
 		<div id ="carrito" class="carrito">
 			<i class="icon-carrito"></i>
 		</div>
 		<section class="productos">
-			<section class="sliders" id = "sliders">
-				<img name="slider" id = "slider" src="" style="" alt="">
-			</section>
 			<div class="ventana" id="modal">
 			</div>
 			<div class="infoP" id="infoP"></div></div>
@@ -99,24 +96,21 @@ if(!isset($_REQUEST['buscar'])){
 				}else{
 					include "routes/principal.php";
 				}
-				// if(file_exists("routes/".$p.".php")) {
-				// 	include "routes/".$p.".php";
-				// }else{
-				// 	echo "<i>No se ha encontrado el modulo <b>".$p."</b> <a href='./'>Regresar</a></i>";
-				// }
 			?>
 		</section>
 	</section>
 	<footer>
 		<div class="Pfooter">
-			<h4>Servicios</h4>
-			<a href="#">Desarollo web</a>
-			<!-- <a href="#">servicios 2</a>
-			<a href="#">servicios 3</a> -->
+			<h4 style="cursor:pointer;" Onclick='window.open("https://servicios.ecosolucionesweb.com/")'>Servicios</h4>
+			<a href="https://servicios.ecosolucionesweb.com/?p=desarrolloweb" target="_blank">Desarollo web</a><br>
+			<a href="https://servicios.ecosolucionesweb.com/?p=ecomerce" target="_blank">Tiendas online</a><br>
+			<a href="https://servicios.ecosolucionesweb.com/?p=medida" target="_blank">Programas a medida</a><br>
+			<a href="https://servicios.ecosolucionesweb.com/?p=classroom" target="_blank">Aulas virtuales</a><br>
+			<!-- <a href="#">servicios 3</a> -->
 		</div>
 		<div class="Pfooter">
 			<h4>Contactanos</h4>
-			<a href="#">+51 902 658 722</a>
+			<a href="https://wa.me/c/51902658722">+51 902 658 722</a>
 			<a>administrador@ecosolucionesweb.com</a>
 			<a>developer@ecosolucionesweb.com</a>
 		</div>

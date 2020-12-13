@@ -23,7 +23,7 @@ window.addEventListener("load", () => {
       indiceImg = 0;
     }
   }
-  setInterval(cambiarImg, tiempo);
+  // setInterval(cambiarImg, tiempo);
 });
 
 var menu = document.getElementById("menu");
@@ -38,7 +38,7 @@ window.addEventListener("scroll", function (a) {
   if (width > 1000) {
     if (window.pageYOffset > altura) {
       menu.classList.add("fixed");
-      carrito.style.background = "chartreuse";
+      carrito.style.background = "#1254a5";
       carrito.style.visibility = "visible";
       carrito.style.display = "block";
       carrito.style.top = "200px";
@@ -74,11 +74,11 @@ var btnAgg = document.getElementById("btn_Agregar");
 function agregar_carro(idp) {
   $("form").submit(function (e) {
     e.preventDefault();
-
+    localStorage.setItem('carro', idp)
     var data = $(this).serializeArray();
     data = idp;
     $.ajax({
-      url: "shoping-car/carrito.php?id=" + idp + "&cant=1",
+      url: "shoping-car/car-end.php?id=" + idp + "&cant=1",
       type: "post",
       dataType: "html",
       data: data,

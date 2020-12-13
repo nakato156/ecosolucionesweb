@@ -32,7 +32,8 @@ if (isset($_POST['id_edit'])) {
             'nombre' => $pd['nombre'],
             'precio' => $pd['precio'],
             'imagen' => $pd['imagen'],
-            'categoria' => $pd['id_categoria']
+            'categoria' => $pd['id_categoria'],
+            'description' => $pd['descripcion']
         );
     }
     $jsonstr = json_encode($json[0]);
