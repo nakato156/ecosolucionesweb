@@ -87,11 +87,6 @@ if (isset($_SESSION['carrito'])) {
 $carrito = $_SESSION['carrito'];
 $total=0;
 
-for ($pt=0; $pt <count($carrito); $pt++) {
-    $total+=$carrito[$pt]['precio']*$carrito[$pt]['cantidad'];
-
-}
-
 if (isset($_SESSION['carrito']) && $_SESSION['carrito'] != null) {
     // Mercado Pago SDK
     require '../routes/vendor/autoload.php';
@@ -125,77 +120,81 @@ if (isset($_SESSION['carrito']) && $_SESSION['carrito'] != null) {
 
     $preference->items = $datosProductos;
     $preference->save();
-}
 
-// datos de mp
-if (isset($_REQUEST['mp_data'])) {
-    $nombre = $_POST['nombre'];
-    $mail = $_POST['correo'];
-    $lugar = $_POST['lugar'];
-    $telef = $_POST['telf'];
-
-    $data [] = array(
-        'nombre' => $nombre,
-        'email' => $mail,
-        'lugar' => $lugar,
-        'telf' => $telef,
-        'monto' => $total
-    );
-    $_SESSION['mp_data']=$data;
-}
-
-// datos generale
-if (isset($_REQUEST['data'])) {
-    $data = $_POST['data'];
-    $nombre = $_POST['nombre'];
-    $email = $_POST['correo'];
-    $lugar = $_POST['lugar'];
-    $telf = $_POST['telf'];
-
-    $nombre = mysqli_real_escape_string($mysqli,$nombre);
-    $telf = mysqli_real_escape_string($mysqli,$telf);
-    $lugar = mysqli_real_escape_string($mysqli,$lugar);
-    $email = mysqli_real_escape_string($mysqli,$email);
-    $codigo_venta = rand(10000,10000000);
-
-    validarEmail($email); 
-
-    if ($data == "izipay") {
-        if($nombre!="" && $telf!="" && $lugar!="" && $email!=""){
-            $monto = $total+(($total*4)/100);
-    
-            $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,monto,fecha,cod,metodo,estado) VALUES('$nombre', '$telf', '$lugar','$email','$monto',NOW(),'$codigo_venta','izipay','pendiente')");
-            $_SESSION['pago']="iz";
-            $_SESSION['cod']=$codigo_venta;
-            borrar_carro($cliente);
-        }else{
-            echo "debe llenear todos los campos";
-        }
-    }elseif ($data == "transferencia") {
-        if($nombre!="" && $telf!="" && $lugar!="" && $email!=""){
-            $monto = $total;
-                        
-            $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,monto,fecha,cod,metodo,estado) VALUES('$nombre', '$telf', '$lugar','$email','$monto',NOW(),'$codigo_venta','transferencia','pendiente')");
-            $_SESSION['pago']="tf";
-            $_SESSION['cod']=$codigo_venta;
-            borrar_carro($cliente);
-        }else{
-            echo "debe llenear todos los campos";
-        }
+    for ($pt=0; $pt <count($carrito); $pt++) {
+        $total+=$carrito[$pt]['precio']*$carrito[$pt]['cantidad'];
     }
 }
+// if(preg_match_all("/shoping-car/", $_SERVER['REQUEST_URI'])==1){
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    // datos de mp
+    if (isset($_REQUEST['mp_data'])) {
+        $nombre = $_POST['nombre'];
+        $mail = $_POST['correo'];
+        $lugar = $_POST['lugar'];
+        $telef = $_POST['telf'];
 
-// ver carro
-if (isset($_POST['car'])) {
-    $carro = json_encode($carrito);
-    echo $carro;
-}
-//  mod cant
-if (isset($_POST['new-cant'])) {
-    $action = $_POST['new-cant'];
-    $id = $_POST['id'];
-    modcant($action,$id);
-}
+        $data [] = array(
+            'nombre' => $nombre,
+            'email' => $mail,
+            'lugar' => $lugar,
+            'telf' => $telef,
+            'monto' => $total
+        );
+        $_SESSION['mp_data']=$data;
+    }
+    // datos generale
+    if (isset($_REQUEST['data'])) {
+        $data = $_POST['data'];
+        $nombre = $_POST['nombre'];
+        $email = $_POST['correo'];
+        $lugar = $_POST['lugar'];
+        $telf = $_POST['telf'];
+
+        $nombre = mysqli_real_escape_string($mysqli,$nombre);
+        $telf = mysqli_real_escape_string($mysqli,$telf);
+        $lugar = mysqli_real_escape_string($mysqli,$lugar);
+        $email = mysqli_real_escape_string($mysqli,$email);
+        $codigo_venta = rand(10000,10000000);
+
+        validarEmail($email); 
+
+        if ($data == "izipay") {
+            if($nombre!="" && $telf!="" && $lugar!="" && $email!=""){
+                $monto = $total+(($total*4)/100);
+        
+                $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,monto,fecha,cod,metodo,estado) VALUES('$nombre', '$telf', '$lugar','$email','$monto',NOW(),'$codigo_venta','izipay','pendiente')");
+                $_SESSION['pago']="iz";
+                $_SESSION['cod']=$codigo_venta;
+                borrar_carro($cliente);
+            }else{
+                echo "debe llenear todos los campos";
+            }
+        }elseif ($data == "transferencia") {
+            if($nombre!="" && $telf!="" && $lugar!="" && $email!=""){
+                $monto = $total;
+                            
+                $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,monto,fecha,cod,metodo,estado) VALUES('$nombre', '$telf', '$lugar','$email','$monto',NOW(),'$codigo_venta','transferencia','pendiente')");
+                $_SESSION['pago']="tf";
+                $_SESSION['cod']=$codigo_venta;
+                borrar_carro($cliente);
+            }else{
+                echo "debe llenear todos los campos";
+            }
+        }
+    }
+    // ver carro
+    if (isset($_POST['car'])) {
+        $carro = json_encode($carrito);
+        echo $carro;
+    }
+    //  mod cant
+    if (isset($_POST['new-cant'])) {
+        $action = $_POST['new-cant'];
+        $id = $_POST['id'];
+        modcant($action,$id);
+    }
+}//}else{exit();die();}
 
 function modcant($action,$id){
     $pd_car = $_SESSION['carrito'];
@@ -221,7 +220,6 @@ function modcant($action,$id){
         }
     }
 }
-
 function mostrar_cod(){
     if (isset($_SESSION['cod'])) {
         $cod = $_SESSION['cod'];
