@@ -3,7 +3,13 @@ $host_mysql="localhost";
 $user_mysql="root";
 $pass_mysql="";
 $bd_mysql="ecosol";
-$mysqli = mysqli_connect($host_mysql, $user_mysql,$pass_mysql,$bd_mysql);
+
+$mysqli = new mysqli($host_mysql, $user_mysql,$pass_mysql,$bd_mysql);
+
+if ($mysqli -> connect_errno) {
+	die($mysqli -> connect_errno);
+}
+	
 
 function clear($var){
 	htmlspecialchars($var);
@@ -17,10 +23,19 @@ function check_admin(){
 function validarEmail($email)
 {
 	if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		return $email;
+		return 200;
 	}else{
-		die("email no valido");
+		return 400;
 	}
+}
+function validarDatos($datos){
+	for ($i=0; $i <count($datos) ; $i++) { 
+		if (!$datos[$i]!="") {
+			http_response_code(400);
+		}
+	}
+	$validar = validarEmail($datos[3]);
+	return $validar;
 }
 function redir($var){
 	?>
@@ -45,13 +60,25 @@ function alert($var){
 	<?php
 }
 
-function connect(){
-	$host_mysql="localhost";
-	$user_mysql="root";
-	$pass_mysql="";
-	$bd_mysql="ecosol";
-
-	$mysqli = mysqli_connect($host_mysql, $user_mysql,$pass_mysql,$bd_mysql);
-	return $mysqli;
+function NonQuery($sql, &$mysqli = null)
+{
+	if (!$mysqli)global $mysqli;
+	$result = $mysqli->query($sql);
+	$resultArray = array();
+	foreach($result as $productos){
+		$resultArray[] = $productos;
+	}
+	return json_encode($resultArray);
 }
+
+function select($sql, &$mysqli = null)
+{
+	if (!$mysqli)global $mysqli;
+	$result = $mysqli->query($sql);
+	foreach($result as $productos){
+		$resultArray[] =  $productos;
+	}
+	return json_encode($resultArray);
+}
+
 ?>

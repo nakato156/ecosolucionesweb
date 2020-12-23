@@ -4,11 +4,15 @@ include "../configs/funciones.php";
 
 // agregar al carro
 if (isset($_SESSION['carrito'])) {
-    if (isset($_REQUEST['id']) && isset($_REQUEST['cant'])) {
+    $carrito = $_SESSION['carrito'];
+    $total=0;
+    if($_SERVER['REQUEST_METHOD']=="POST"){
+
+    if (isset($_POST['id']) && isset($_POST['cant'])) {
         $productos_carro = $_SESSION['carrito'];
         $match = false;
         $num = 0;
-        $cant=$_REQUEST['cant'];
+        $cant=$_POST['cant'];
         for($i=0;$i<count($productos_carro); $i++){
             if ($productos_carro[$i]['id'] == $_REQUEST['id']) {
                 $match  = true;
@@ -19,10 +23,9 @@ if (isset($_SESSION['carrito'])) {
             $productos_carro[$num]['cantidad']=$productos_carro[$num]['cantidad']+$cant;
             $_SESSION['carrito'] = $productos_carro;
         }else{   
-            $query = mysqli_query($mysqli,"SELECT * FROM productos WHERE id =".$_REQUEST['id'])or die();
+            $query = mysqli_query($mysqli,"SELECT * FROM productos WHERE id =".$_POST['id'])or die();
     
             $fila = mysqli_fetch_array($query);
-    
             $nombre = $fila[1];
             $precio = $fila[2];
             $imagen = $fila[3];
@@ -35,7 +38,7 @@ if (isset($_SESSION['carrito'])) {
             }
 
             $productosC = array(
-                'id' => $_REQUEST['id'],
+                'id' => $_POST['id'],
                 'nombre' => $nombre,
                 'precio' => $precioFinal,
                 'img' => $imagen,
@@ -45,47 +48,51 @@ if (isset($_SESSION['carrito'])) {
             array_push($productos_carro,$productosC);
             $_SESSION['carrito'] = $productos_carro;
         }
-    }
+        $res_http = $_SESSION['carrito']!=null ? 201 : 500;
+        return  http_response_code($res_http);
+    }}
 }else{
-    if (isset($_REQUEST['id']) && isset($_REQUEST['cant'])) {
-        $query = mysqli_query($mysqli,"SELECT * FROM productos WHERE id =".$_REQUEST['id'])or die();
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-        $fila = mysqli_fetch_array($query);
+        if (isset($_POST['id']) && isset($_POST['cant'])) {
+            $query = mysqli_query($mysqli,"SELECT * FROM productos WHERE id =".$_POST['id'])or die();
 
-        $nombre = $fila[1];
-        $precio = $fila[2];
-        $imagen = $fila[3];
-        $oferta = $fila[5];
+            $fila = mysqli_fetch_array($query);
 
-        if($oferta > 0){
-            $precioFinal = ($precio * $oferta)/100;
-        }else{
-            $precioFinal = $precio;
-        }
+            $nombre = $fila[1];
+            $precio = $fila[2];
+            $imagen = $fila[3];
+            $oferta = $fila[5];
 
-        $productos_carro[] = array(
-            'id' => $_REQUEST['id'],
-            'nombre' => $nombre,
-            'precio' => $precioFinal,
-            'img' => $imagen,
-            'oferta' => $oferta,
-            'cantidad' => $cant
-        );
-        $_SESSION['carrito'] = $productos_carro;
-    }else{
-        if (!isset($_SESSION['carrito']) || $_SESSION['carrito']==null) {
-            if (isset($_SESSION['cod'])) {
-                mostrar_cod();
+            if($oferta > 0){
+                $precioFinal = ($precio * $oferta)/100;
+            }else{
+                $precioFinal = $precio;
             }
-            echo "<h1>Su carrito esta vacio :(</h1><br>";
-            // sleep(3000);
-            die();
+
+            $productos_carro[] = array(
+                'id' => $_POST['id'],
+                'nombre' => $nombre,
+                'precio' => $precioFinal,
+                'img' => $imagen,
+                'oferta' => $oferta,
+                'cantidad' => $cant
+            );
+            $_SESSION['carrito'] = $productos_carro;
+
+            $res_http = $_SESSION['carrito']!=null ? 201 : 500;
+            return  http_response_code($res_http);
+        }else{
+            if (!isset($_SESSION['carrito']) || $_SESSION['carrito']==null) {
+                if (isset($_SESSION['cod'])) {
+                    mostrar_cod();
+                }
+                echo "<h1>Su carrito esta vacio :(</h1><br>";
+                die();
+            }
         }
     }
 }
-
-$carrito = $_SESSION['carrito'];
-$total=0;
 
 if (isset($_SESSION['carrito']) && $_SESSION['carrito'] != null) {
     // Mercado Pago SDK
@@ -144,11 +151,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $_SESSION['mp_data']=$data;
     }
     // datos generale
-    if (isset($_REQUEST['data'])) {
+    if (isset($_POST['data'])) {
         $data = $_POST['data'];
         $nombre = $_POST['nombre'];
-        $email = $_POST['correo'];
         $lugar = $_POST['lugar'];
+        $email = $_POST['correo'];
         $telf = $_POST['telf'];
 
         $nombre = mysqli_real_escape_string($mysqli,$nombre);
@@ -156,8 +163,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $lugar = mysqli_real_escape_string($mysqli,$lugar);
         $email = mysqli_real_escape_string($mysqli,$email);
         $codigo_venta = rand(10000,10000000);
-
-        validarEmail($email); 
+        $datos = array($nombre, $telf, $lugar, $email);
+        $r = validarDatos($datos);
+        if($r != 200){
+            http_response_code($r);return;
+        }
 
         if ($data == "izipay") {
             if($nombre!="" && $telf!="" && $lugar!="" && $email!=""){
@@ -187,8 +197,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if (isset($_POST['car'])) {
         $carro = json_encode($carrito);
         echo $carro;
+        $http_car = $carro ? 200 : 500;
+        return http_response_code($http_car);
     }
-    //  mod cant
+    //  update cant
     if (isset($_POST['new-cant'])) {
         $action = $_POST['new-cant'];
         $id = $_POST['id'];
@@ -204,6 +216,8 @@ function modcant($action,$id){
                 $pd_car[$i]['cantidad'] = $pd_car[$i]['cantidad']+1;
                 $_SESSION['carrito'] = $pd_car;
             }
+            $res = $_SESSION['carrito']!=null ? 200 : 500;
+            return http_response_code($res);
         }
     }else{
         for($i=0;$i<count($pd_car); $i++){
@@ -214,7 +228,7 @@ function modcant($action,$id){
                 }else{
                     $pd_car[$i]['cantidad'] = $pd_car[$i]['cantidad']-1;
                     $_SESSION['carrito'] = $pd_car;
-                    return;
+                    return http_response_code(201);
                 }
             }
         }
@@ -232,9 +246,7 @@ function borrar_carro($q){
     }
 }
 function validar_carro(){
-    if ($_SESSION['carrito'] == null) {
-        echo "0";
-        return;
-    }
+    $response = $_SESSION['carrito'] == null ? "0" : true;
+    echo $response;
 }
 ?>

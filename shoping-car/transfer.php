@@ -1,7 +1,8 @@
 <?php
     session_start();
     if(!isset($_SESSION['pago']) || $_SESSION['pago']==""){
-        header("location:carrito.php");
+        // header("location:carrito.php");
+        echo "no variable 'pago'";
         die();
     }
     // var_dump($_SESSION['cod']);exit;

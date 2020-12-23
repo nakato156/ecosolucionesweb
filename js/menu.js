@@ -1,40 +1,13 @@
 var hostLocal = "http://localhost:8000/Page-ecosolwebtel";
-var host = "https://ecosolucionesweb.com";
-window.addEventListener("load", () => {
-  var imagenes = [];
-  imagenes[0] = "img/slider/img-gameboy.jpg";
-  imagenes[1] = "img/slider/img-cargador.jpg";
-  imagenes[2] = "img/slider/img-cargadormg.jpg";
-  imagenes[3] = "img/slider/img-cargadoresmg.jpg";
-  imagenes[4] = "img/slider/img-cgAuto.jpg";
-  imagenes[5] = "img/slider/img-cgsAutos.jpg";
-  imagenes[6] = "img/slider/img-selladores.jpg";
-
-  var indiceImg = 0;
-  tiempo = 2000;
-
-  function cambiarImg() {
-    document.slider.src = imagenes[indiceImg];
-    var sl = document.querySelector("#slider");
-    sl.style.opacity = "1";
-    if (indiceImg < 6) {
-      indiceImg++;
-    } else {
-      indiceImg = 0;
-    }
-  }
-  // setInterval(cambiarImg, tiempo);
-});
-
-var menu = document.getElementById("menu");
-var carrito = document.getElementById("carrito");
-var altura = menu.offsetTop;
-var width = screen.width;
+let menu = document.getElementById("menu");
+let carrito = document.getElementById("carrito");
+let altura = menu.offsetTop;
+let width = screen.width;
 if (width > 1000) {
   carrito.style.top = "30px";
 }
 
-window.addEventListener("scroll", function (a) {
+window.addEventListener("scroll", function () {
   if (width > 1000) {
     if (window.pageYOffset > altura) {
       menu.classList.add("fixed");
@@ -55,74 +28,53 @@ carrito.addEventListener("click", () => {
 });
 
 var search = document.getElementById("buscar");
-let sliders = document.getElementById("sliders");
-
-if (search.value != "") {
-  sliders.style.display = "none";
-}
-
-// seccion de categorias lateral
-$(".icon-down").click(function () {
-  $(".submenu").children("ul").slideToggle();
-});
-$("ul").click(function (p) {
-  p.stopPropagation();
-});
 
 //funciones del boton para agregar al carrito
 var btnAgg = document.getElementById("btn_Agregar");
-function agregar_carro(idp) {
+async function agregar_carro(idp) {
   $("form").submit(function (e) {
     e.preventDefault();
-    localStorage.setItem('carro', idp)
-    var data = $(this).serializeArray();
-    data = idp;
-    $.ajax({
-      url: "shoping-car/car-end.php?id=" + idp + "&cant=1",
-      type: "post",
-      dataType: "html",
-      data: data,
-    })
-      .done(function () {
-        alerta_carrito();
-        console.log("Producto agregado al carro !siiiiiiii......");
-      })
-      .fail(function () {
-        alert("ha ocurrido un error al añadir el producto al carrito");
-      });
   });
+  localStorage.setItem('carro', idp)
+  const data = new FormData();
+  data.append("id",idp);
+  data.append("cant",1);
+  await fetch("shoping-car/car-end.php",{
+    method: "POST",
+    body: data
+  })
+  .then(function (res){
+    if(res.ok){
+      alerta_carrito();
+      // console.log(`status: ${res.status} ${res.statusText}`)
+      console.log("Producto agregado al carro !siiiiiiii......");
+      return;
+    }else{ console.error(`error: ${res.status} ${res.statusText}`);return;}
+  })
+  .catch(err=>console.error(err))
 }
-//btnpay
-
-
-//func ventana modal
+//function window modal
 var conteiner = document.getElementById("modal");
 var info = document.getElementById("infoP");
 i = 0;
 function alerta_carrito() {
   if (i === 0) {
-    var alerta_prod = document.createElement("div");
-    var h3 = document.createElement("h3");
-    var p = document.createElement("p");
-
-    alerta_prod.setAttribute("class", "ventanaCarro");
-    h3.setAttribute("class", "aviso");
-    p.setAttribute("class", "parrafo");
-
-    conteiner.appendChild(alerta_prod);
-    alerta_prod.appendChild(h3);
-    alerta_prod.appendChild(p);
-
+    let temp = `
+    <div class="ventanaCarro">
+      <h3 class="aviso">Exitoo</h3>
+      <p class="parrafo">Producto agregado al carrito</p>
+    </div>
+    `;
     conteiner.style.display = "block";
     conteiner.style.top = window.pageYOffset + 100 + "px";
-    h3.innerHTML = "Exito";
-    p.innerHTML = "Producto agregado al carrito";
+    conteiner.innerHTML = temp;
     i = 1;
     setTimeout(ocultar, 2300);
   }
   if (i === 1) {
     conteiner.style.margin = "200px";
     conteiner.style.display = "block";
+    conteiner.style.position = "absolute";
     conteiner.style.top = window.pageYOffset + 100 + "px";
     setTimeout(ocultar, 2300);
   }
@@ -131,10 +83,10 @@ function ocultar() {
   conteiner.style.display = "none";
 }
 
-function info_producto(id) {
+async function info_producto(id) {
   const data = new FormData();
   data.append("id", id);
-  fetch("./routes/infopd.php", {
+  await fetch("./routes/infopd.php", {
     method: "POST",
     body: data,
   })
@@ -152,7 +104,6 @@ function info_producto(id) {
       let precio = info_prod.precio;
       let categoria = info_prod.categoria;
       let ficha = info_prod.ficha;
-      console.log(info_prod);
       printInfoProd(nombre,descript,precio,categoria,img,ficha);
     })
     .catch(function (err) {
@@ -162,68 +113,46 @@ function info_producto(id) {
 let r = 0;
 function printInfoProd(name,descript,precio,cat,img,ficha) {
   reset(r);
-  let infProd = document.createElement("div");
-  let cajaP = document.createElement("div");
-  let img_infoP = document.createElement("img");
-  let h3 = document.createElement("h3");
-  let p = document.createElement("p");
-  let description = document.createElement("p");
-  let x = document.createElement("i");
-  
-  infProd.setAttribute("class", "infoProd");
-  infProd.setAttribute("id", "infoProd");
-  cajaP.setAttribute("class", "cajaP");
-  img_infoP.setAttribute("src", "img-products/"+img);
-  h3.setAttribute("class", "infP");
-  p.setAttribute("class", "parrafo");
-  description.setAttribute("class", "parrafo description");
-  x.setAttribute("class", "icon-plus cerrar");
-  
-  infoP.appendChild(infProd);
-  infProd.appendChild(h3);
-  infProd.appendChild(x);
-  infProd.appendChild(cajaP);
-  cajaP.appendChild(img_infoP);
-  cajaP.appendChild(p);
-  cajaP.appendChild(description);
+  let temp = `
+  <div class="infoProd" id="infoProd">
+    <h3 class="infP" style="color:#000;padding:20px;">${name}</h3>
+    <i class="icon-plus cerrar" id="x"></i>
+    <div class="cajaP" id="cajaP">
+      <img src="img-products/${img}">
+      <p class="parrafo">Precio: S/.${precio}<br>Categoria: ${cat}</p>
+      <p class="parrafo description" id="descript">${descript}</p>
+      <div id="cajaFT" style="width:100%;bottom:0;"></div>
+    </div>
+  </div>
+  `;
+    infoP.innerHTML = temp;
   if(cat === "computo" ||  cat === "importaciones"){
-    let fichaTecnica = document.createElement("div");
-    let viewFT = document.createElement("button");
-    let textFT = document.createElement("p");
-
-    fichaTecnica.setAttribute("class","fichaTec");
-    viewFT.setAttribute("class","viewFT");
-    textFT.setAttribute("class","textFT");
+    let FT = `
+    <div class="fichaTec" style="width:100%;">
+      <p class="textFT">Ficha tecnca :</p>
+      <button class="viewFT" id="viewFT">Ver Ficha</button>
+    </div>
+    `;
     
-    cajaP.appendChild(fichaTecnica)
-    fichaTecnica.appendChild(textFT)
-    fichaTecnica.appendChild(viewFT)
-    
-    fichaTecnica.style.width="100%";
-
-    textFT.innerHTML="Ficha tecnca : "
-    viewFT.innerHTML="Ver Ficha"
-
+    let cajaFT = document.getElementById('cajaFT');
+    cajaFT.innerHTML=FT;
+    viewFT = document.getElementById('viewFT'); 
     viewFT.addEventListener("click", ()=>{
       if (ficha == "" || ficha == "undefined") {
         alert("Producto sin ficha tecnica");
       }else{
-        window.open(hostLocal+"/fichas-tecnicas doc/"+ficha);
+        window.open(`${hostLocal}/fichas-tecnicas doc/${ficha}`);
       }
     })
   }
-
+  let infProd = document.getElementById('infoProd');
+  let x = document.getElementById('x');
   infoP.style.display = "block";
   if (screen.width <= 590) {
-    infProd.style.width = (screen.width-60)+"px";
+    let wd = infProd.style.width = (screen.width-60)+"px";
+    console.log(wd);
   }
-  h3.style.color = "#000";
-  h3.style.padding = "20px";
-  h3.innerHTML = name;
-  p.innerHTML = "Precio: "+"S/."+precio+"<br>"+"Categoria: "+cat;
-  description.innerHTML = descript;
   r = 1;
-  console.log(descript);
   x.addEventListener('click',()=>{
     infProd.remove()
     infoP.style.display="none";
@@ -231,8 +160,7 @@ function printInfoProd(name,descript,precio,cat,img,ficha) {
   })
   function reset(r) {
     if(r == 1){
-      let resetInfo = document.getElementById("infoProd");
-      resetInfo. parentNode. removeChild(resetInfo);
+      infProd.parentNode.removeChild(infProd);
       r = 0;
       return r;
     }else{
