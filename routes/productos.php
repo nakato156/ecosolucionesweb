@@ -1,30 +1,22 @@
 <section class="catalogo">
     <?php 
-    $_REQUEST['p'];
-
     if(isset($buscar)){
-        $busqueda = strtolower($_REQUEST['buscar']);
-        $query = mysqli_query($mysqli,"SELECT * FROM productos WHERE nombre LIKE '%".$busqueda."%'");
+        $busquedad = $_REQUEST['buscar'];
+        $sql = mysqli_query($mysqli,"SELECT * FROM productos WHERE nombre LIKE '%".$busquedad."%'");
     }
     else{
         if(isset($p)){
             if ($_REQUEST['p'] == "principal") {
-                $query = mysqli_query($mysqli,"SELECT * FROM productos");
-            }elseif($_REQUEST['p'] == "cat"){
-                   header("location:catalogoPDF/catalogo-cosmeticos.pdf");
+                $sql = mysqli_query($mysqli,"/*qcon*/" ."SELECT * FROM productos");
             }else{                
-                $query = mysqli_query($mysqli,"SELECT productos.id, productos.nombre, productos.precio, productos.oferta, productos.imagen, productos.id_categoria, categorias.categoria FROM productos INNER JOIN categorias ON productos.id_categoria = categorias.id WHERE categorias.categoria= '$p'");
+                $sql = mysqli_query($mysqli,"SELECT productos.id, productos.nombre, productos.precio, productos.oferta, productos.imagen, productos.id_categoria, categorias.categoria FROM productos INNER JOIN categorias ON productos.id_categoria = categorias.id WHERE categorias.categoria= '$p'");
             }
         }else{
-            $query = mysqli_query($mysqli,"SELECT * FROM productos");
+            $sql = mysqli_query($mysqli,"/*qc=on*/" ."SELECT * FROM productos");
         }
     }
-    // if(!isset($query)){
-    //     header("location")
-    //     die();
-    // }
-    while($res=mysqli_fetch_array($query)){
-        $id = $res["id"];
+    while($res=mysqli_fetch_array($sql)){
+        $id = $res['id'];
         $name = $res['nombre'];
         $precio = $res['precio'];
         $oferta = $res['oferta'];
@@ -40,7 +32,7 @@
     <form style="display:inline-flex;">
     <div class="producto">
         <div class="name_producto" id="nombre"><b><?=$name;?></b></div>
-        <div><img onclick="info_producto(<?=$id?>)" src="img-products/<?=$img?>" id="img" class="img_producto" alt=""></div>
+        <div><img onclick="info_producto(<?=$id?>)" src="img-products/<?=$img?>" id="img" class="img_producto" alt="<?="ecosolwebtel_".$name?>"></div>
         <div class ="precio" id="precio"><?=$preciofinal?></div>
         <button type="submit" class="btn" id="btn_Agregar" onclick="agregar_carro('<?=$id;?>');"><div class="icon-carrito"></div><div class="añd" >Añadir al carrito</div>
         </button>

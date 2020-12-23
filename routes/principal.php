@@ -1,22 +1,20 @@
 <section class="catalogo">
     <?php
-    if (isset($_REQUEST['btnAgregar'])) {
-        $id = $res['id'];
-        var_dump($id); 
-    }
     if(isset($buscar)){
-        $busqueda = strtolower($_REQUEST['buscar']);
-        $query = mysqli_query($mysqli,"SELECT * FROM productos WHERE nombre LIKE '%".$busqueda."%'");
+        $busquedad = $_REQUEST['buscar'];
+        $sql = NonQuery("SELECT * FROM productos WHERE nombre LIKE '%".$busquedad."%'");
+        $sql = json_decode($sql,true);
     }
     else{
-        $query = mysqli_query($mysqli,"SELECT * FROM productos");
+        $sql = select("SELECT*FROM productos");
+        $sql = json_decode($sql,true);
     }
-    while($res=mysqli_fetch_array($query)){
-        $id = $res['id'];
-        $name = $res['nombre'];
-        $precio = $res['precio'];
-        $oferta = $res['oferta'];
-        $img = $res['imagen'];
+    for($x=0;$x<count($sql); $x++){
+        $id = $sql[$x]['id'];
+        $name = $sql[$x]['nombre'];
+        $precio = $sql[$x]['precio'];
+        $oferta = $sql[$x]['oferta'];
+        $img = $sql[$x]['imagen'];
 
         if($oferta > 0){
             $desc = $precio - ($precio * $oferta)/100;
@@ -28,7 +26,7 @@
     <form style="display:inline-flex;">
     <div class="producto">
         <div class="name_producto" id="nombre"><b><?=$name;?></b></div>
-        <div><img onclick="info_producto(<?=$id?>)" src="img-products/<?=$img?>" id="img" class="img_producto" alt=""></div>
+        <div><img onclick="info_producto(<?=$id?>)" src="img-products/<?=$img?>" id="img" class="img_producto" alt="<?="ecosolwebtel_".$name?>"></div>
         <div class ="precio" id="precio"><?=$preciofinal?></div>
         <button type="submit" class="btn" id="btn_Agregar" onclick="agregar_carro('<?=$id;?>');"><div class="icon-carrito"></div><div class="añd" >Añadir al carrito</div>
         </button>

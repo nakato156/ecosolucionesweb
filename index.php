@@ -1,13 +1,7 @@
 <?php
 include "configs/config.php";
 include "configs/funciones.php";
-$urlDev ="delopment";
-if(!isset($p)) {
-	$p = "principal";
-
-}else {
-	$p = $p;
-}
+$p = isset($p) ? $p : "principal";
 
 if(!isset($_REQUEST['buscar'])){
 	$busqueda="";
@@ -91,7 +85,7 @@ if(!isset($_REQUEST['buscar'])){
 			</div>
 			<div class="infoP" id="infoP"></div></div>
 			<?php
-				if(isset($_REQUEST['p'])){
+				if($p !="principal"){
 					include "routes/productos.php";	
 				}else{
 					include "routes/principal.php";

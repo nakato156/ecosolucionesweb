@@ -1,6 +1,4 @@
 <?php
-// include "../configs/config.php";
-// include "../configs/funciones.php";
 include "car-end.php";
 ?>
 <link rel="stylesheet" type="text/css" href="../css/cssProducts.css">
@@ -17,7 +15,9 @@ include "car-end.php";
         <td>Total</td>
         <td></td>
     </tr>
-    <tbody id="pd-car"></tbody>
+    <tbody id="pd-car">
+        <tr class="trs"></tr>
+    </tbody>
 <tr class="trs">
     <td><h3><b>SubTotal<b></h3></td>
         <td></td>    

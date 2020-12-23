@@ -643,9 +643,19 @@ footer {
 	}
 }
 @media(max-width:590px){
+	.nav{
+		display: flex;
+	}
 	.logo {
-		/* width: 100%; */
-		display: none;
+		width: auto;
+		display:flex;
+		position:relative;
+		float: right;
+		margin: 5px 10px 0 0;
+	}
+	.logo>img{
+		width: 80px;
+		height: 80px;
 	}
 	.busqueda{
 		display: none;
