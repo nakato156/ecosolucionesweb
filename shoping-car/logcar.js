@@ -39,7 +39,7 @@ function disabled() {
 }
 
 function send_data(method,val){
-    let pag = val == "izipay" ? val : "transfer"
+    let pag = val == "izipay" ? val : val== "" ? "" : "transfer";
     let name = nombre.value;
     let dir = direccion.value;
     let mail = email.value;
@@ -61,7 +61,9 @@ function send_data(method,val){
         if (res.ok) {
             localStorage.removeItem('carro');
             console.log("compra realizada")
-            window.location.href = `${pag}.php`;
+            if(!pag == ""){
+                window.location.href = `${pag}.php`;
+            }
         } else {
             alert("Hay un dato No valido");
             throw `Error: ${res.status} ${res.statusText}`;
@@ -127,6 +129,7 @@ async function obtenerdt() {
         })
         .then(function (res){
             return res.json();
+
         })
         .then(function (res){
             temp = "";

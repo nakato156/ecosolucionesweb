@@ -135,7 +135,8 @@ if (isset($_SESSION['carrito']) && $_SESSION['carrito'] != null) {
 // if(preg_match_all("/shoping-car/", $_SERVER['REQUEST_URI'])==1){
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     // datos de mp
-    if (isset($_REQUEST['mp_data'])) {
+    if (isset($_POST['mp_data'])) {
+        echo "mp";
         $nombre = $_POST['nombre'];
         $mail = $_POST['correo'];
         $lugar = $_POST['lugar'];
