@@ -1,6 +1,5 @@
 <?php
 include "../configs/config.php";
-$mysqli = mysqli_connect($host_mysql, $user_mysql,$pass_mysql,$bd_mysql);
 // information of products
 if ($_SERVER['REQUEST_METHOD']=="POST") {    
     if (isset($_POST['id'])) {    
@@ -51,9 +50,9 @@ if (isset($_REQUEST['codigo'])) {
         'codigo' => $pedido['cod'],
         'status' => $pedido['estado']
     );
+    $ver_pedido = json_encode($info[0]);
+    echo $ver_pedido;
     $res = $q ? 200 : 500;
     return http_response_code($res);
-    $ver_pedido = json_encode($pedido);
-    echo $ver_pedido;
 }
 ?>

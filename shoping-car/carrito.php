@@ -1,5 +1,6 @@
 <?php
 include "car-end.php";
+$sql = mysqli_query($mysqli,"SELECT * FROM ciudades");
 ?>
 <link rel="stylesheet" type="text/css" href="../css/cssProducts.css">
 <link rel="stylesheet" type="text/css" href="../styles.css">
@@ -26,12 +27,23 @@ include "car-end.php";
         <td><h3><b><b><h3></td>    
 </tr>
 </table>
-    <section class="pagar">
-        <form action="car-end.php" method="post" id="dataUser">
+    <section class="pagar" id="form_pago">
+        <form id="dataUser">
             <label for="">Nombres*</label>
             <input type="text" id="nombre" name="nombre">
             <label for="">Telefono*</label>
             <input type="text" id="telf" name="telf">
+            <select name="ciudad" id="ciudad" class="selectCiudad">
+            <option value="">Ciudad</option>
+            <?php
+                while ($ciudad=mysqli_fetch_array($sql)) {
+                    
+            ?>
+                <option value="<?=$ciudad['ciudad'];?>"><?=$ciudad['ciudad'];?></option>
+            <?php
+                }
+            ?>
+            </select>
             <label for="">Direccion*</label>
             <input type="text" id="direccion" name="direccion">
             <label for="">Email*</label>
@@ -70,5 +82,4 @@ if(isset($_SESSION['cod']) && $_SESSION['cod']!=""){
     mostrar_cod();
 }
 ?>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script src="logcar.js"></script>

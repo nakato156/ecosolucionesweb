@@ -1,6 +1,6 @@
 <?php
 include "../configs/config.php";
-$mysqli = mysqli_connect($host_mysql, $user_mysql,$pass_mysql,$bd_mysql);
+include "../configs/funciones.php";
 
 if (isset($_REQUEST['method']) && isset($_REQUEST['cod']) && $_REQUEST['cod'] !="") {
     $cod = $_REQUEST['cod'];
@@ -20,13 +20,13 @@ if (isset($_REQUEST['method']) && isset($_REQUEST['cod']) && $_REQUEST['cod'] !=
         $cod = $_SESSION['cod'];
     
         $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,monto,fecha,cod,metodo,estado) VALUES('$nombre', '$telf', '$direccion', '$email','$monto',NOW(),'$cod','$method','$status')");
-        borrar_carro($cliente);
+        borrar_carro_p($cliente);
     }else{
         die("Compra ya realizada vuelve al menu principal");
     }
 }
 
-function borrar_carro($q){
+function borrar_carro_p($q){
     if ($q) {
         unset($_SESSION['carrito']);
         unset($_SESSION['mp_data']);
@@ -108,11 +108,11 @@ function ver_tracking()
                 tem += `
                 <tr class="Vtrack">
                     <td class="text-center">${pedido.nombre}</td>
-                    <td>${pedido.telefono}</td>
-                    <td>${pedido.direccion}</td>
+                    <td>${pedido.telf}</td>
+                    <td>${pedido.lugar}</td>
                     <td>${pedido.monto}</td>
-                    <td>${pedido.cod}</td>                                   
-                    <td>${pedido.estado}</td>                   
+                    <td>${pedido.codigo}</td>                                   
+                    <td>${pedido.status}</td>                   
                 </tr>`;
                 $("#view_tracking").html(tem);
             }

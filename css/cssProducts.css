@@ -333,6 +333,14 @@ form >input{
 	border-bottom: 1px solid #222022;
 	outline-color: transparent;
 }
+form >select{
+	margin-top: 10px;
+    padding: 5px 8px;
+    width: 80%;
+	border: 1px solid #8a8787;
+	box-shadow: rgba(67, 132, 218, 0.5);
+	outline-color: rgba(67, 132, 218,0.5);
+}
 .tyc{
 	width: 100%;
 	padding: 0 5px;

@@ -1,7 +1,7 @@
 <?php
 include "../configs/config.php";
 include "../configs/funciones.php";
-
+$token = getenv("TOKEN");
 // agregar al carro
 if (isset($_SESSION['carrito'])) {
     $carrito = $_SESSION['carrito'];
@@ -99,7 +99,7 @@ if (isset($_SESSION['carrito']) && $_SESSION['carrito'] != null) {
     require '../routes/vendor/autoload.php';
 
     // Add Your credentials
-    MercadoPago\SDK::setAccessToken('TEST-7193293061917941-092017-733ada8f0546bc4dc3347475b5bff79f-648764853');
+    MercadoPago\SDK::setAccessToken($token);
 
     // Create a preference object
     $preference = new MercadoPago\Preference();
@@ -140,12 +140,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $nombre = $_POST['nombre'];
         $mail = $_POST['correo'];
         $lugar = $_POST['lugar'];
+        $ciudad = $_POST['ciudad'];
         $telef = $_POST['telf'];
-
+        validar_ciudad($mysqli,$ciudad);
         $data [] = array(
             'nombre' => $nombre,
             'email' => $mail,
             'lugar' => $lugar,
+            'ciudad' => $ciudad,
             'telf' => $telef,
             'monto' => $total
         );
@@ -156,6 +158,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $data = $_POST['data'];
         $nombre = $_POST['nombre'];
         $lugar = $_POST['lugar'];
+        $ciudad = $_POST['ciudad'];
         $email = $_POST['correo'];
         $telf = $_POST['telf'];
 
@@ -164,19 +167,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $lugar = mysqli_real_escape_string($mysqli,$lugar);
         $email = mysqli_real_escape_string($mysqli,$email);
         $codigo_venta = rand(10000,10000000);
-        $datos = array($nombre, $telf, $lugar, $email);
+        $datos = array('nombre'=>$nombre, 'telf'=>$telf, 'lugar'=>$lugar, 'email'=>$email);
         $r = validarDatos($datos);
-        if($r != 200){
-            http_response_code($r);return;
+        $c = validar_ciudad($mysqli,$ciudad);
+
+        if($r != 200 || !$c){
+            return http_response_code(400);
         }
 
         if ($data == "izipay") {
             if($nombre!="" && $telf!="" && $lugar!="" && $email!=""){
                 $monto = $total+(($total*4)/100);
         
-                $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,monto,fecha,cod,metodo,estado) VALUES('$nombre', '$telf', '$lugar','$email','$monto',NOW(),'$codigo_venta','izipay','pendiente')");
-                $_SESSION['pago']="iz";
+                $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,ciudad,direccion,email,monto,fecha,cod,metodo,estado) VALUES('$nombre', '$telf', '$ciudad','$lugar','$email','$monto',NOW(),'$codigo_venta','izipay','pendiente')");
                 $_SESSION['cod']=$codigo_venta;
+                $s_cod = $_SESSION['cod'];
+                $_SESSION['pago']="iz";
+                insert_pd($mysqli,$s_cod);
                 borrar_carro($cliente);
             }else{
                 echo "debe llenear todos los campos";
@@ -185,9 +192,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if($nombre!="" && $telf!="" && $lugar!="" && $email!=""){
                 $monto = $total;
                             
-                $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,direccion,email,monto,fecha,cod,metodo,estado) VALUES('$nombre', '$telf', '$lugar','$email','$monto',NOW(),'$codigo_venta','transferencia','pendiente')");
-                $_SESSION['pago']="tf";
+                $cliente=mysqli_query($mysqli,"INSERT INTO pedidos (nombre,telefono,ciudad,direccion,email,monto,fecha,cod,metodo,estado) VALUES('$nombre', '$telf', '$ciudad','$lugar','$email','$monto',NOW(),'$codigo_venta','transferencia','pendiente')");
                 $_SESSION['cod']=$codigo_venta;
+                $s_cod = $_SESSION['cod'];
+                $_SESSION['pago']="tf";
+
+                insert_pd($mysqli,$s_cod);
                 borrar_carro($cliente);
             }else{
                 echo "debe llenear todos los campos";
@@ -249,5 +259,11 @@ function borrar_carro($q){
 function validar_carro(){
     $response = $_SESSION['carrito'] == null ? "0" : true;
     echo $response;
+}
+function validar_ciudad($mysqli,$ciudad){
+    $query = NonQuery("SELECT * FROM ciudades WHERE ciudad = '$ciudad'");
+    if ($query != false) {
+        return true;
+    }
 }
 ?>

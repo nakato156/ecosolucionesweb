@@ -152,4 +152,5 @@ $nombre = $res['username'];
     </div>
 </body>
 <script src="js/index.js"></script>
+<script src="js/notification.js"></script>
 </html>

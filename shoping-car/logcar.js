@@ -1,5 +1,7 @@
 window.addEventListener('load', function () {
     obtenerdt();
+    ciudad = document.getElementById('ciudad');
+    ocultar_form()
 });
 var pd = document.getElementById("pd-car");
 var form_mp=document.getElementById('mp');
@@ -17,7 +19,7 @@ let btn_iz = document.getElementById('izipay');
 
 disabled();
 checkbox.addEventListener('change', function() {        
-    if(nombre.value !="" & telf.value !="" & direccion.value!="" & email.value!=""){
+    if(nombre.value !="" & telf.value !="" & direccion.value!="" & email.value!="" & ciudad.value!=""){
         if(this.checked) {
             btn_tf.disabled = false;   
             btn_iz.disabled = false;   
@@ -38,27 +40,29 @@ function disabled() {
     btn_iz.disabled = true;   
 }
 
-function send_data(method,val){
+async function send_data(method,val){
     let pag = val == "izipay" ? val : val== "" ? "" : "transfer";
     let name = nombre.value;
     let dir = direccion.value;
     let mail = email.value;
     let telf = document.getElementById('telf');
     let number = telf.value;
+    let cd = ciudad.value;
 
     const data = new FormData();
     data.append(method, val);
     data.append("nombre", name);
     data.append("lugar", dir);
+    data.append("ciudad", cd);
     data.append("correo", mail);
     data.append("telf", number);
-
-    fetch("car-end.php", {
+    await fetch("car-end.php", {
         method: "post",
         body: data,
     })
     .then(function (res) {
         if (res.ok) {
+            not();
             localStorage.removeItem('carro');
             console.log("compra realizada")
             if(!pag == ""){
@@ -106,6 +110,7 @@ async function minus(id,element) {
     if (car == "0") {
         pd.innerHTML = "<h1>Carro vacio :(</h1>"
         localStorage.removeItem("carro");
+        ocultar_form()
     }else{
         let parse = parseInt(element.innerHTML);
         if (parse == 1) {
@@ -119,7 +124,7 @@ async function minus(id,element) {
     }
 }
 async function obtenerdt() {
-    if (localStorage.getItem('carro')) {     
+    if (localStorage.getItem('carro')) {
         const data = new FormData();
         data.append("car", "data");
 
@@ -186,16 +191,19 @@ function c() {
         }) ;
     }
 }
-function addLocalStorage(producto){
-    let ls =localStorage
-    ls.setItem('productos',JSON.stringify(producto))
+async function not() {
+    await fetch('https://server-notif.herokuapp.com/message',{
+        method:"post",
+        headers: {
+        "Content-Type": 'application/json'
+        }
+    });
 }
-
-function getLS(){
-    let ls =localStorage
-    if(ls.getItem('productos')){
-        let listPd= ls.getItem('productos')
-        pds = JSON.parse(listPd)
-        return pds
+function ocultar_form(){
+    let pagar = document.getElementById('form_pago');
+    if (!localStorage.getItem('carro')) {
+        pagar.style.visibility = "hidden";
+    }else{
+        pagar.style.visibility = "visible";
     }
 }
